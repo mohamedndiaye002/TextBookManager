@@ -17,14 +17,14 @@ public class MainApp extends Application {
         this.stage = stage; // Stocker l'objet Stage
 
         // Charger la scène de connexion au démarrage
-        LoginScene loginScene = new LoginScene(this);
+        EnseignantScene loginScene = new EnseignantScene(this);
         loginScene.getScene().getStylesheets().add(Objects.requireNonNull(getClass().getResource("ressources/css/style.css")).toExternalForm());
         stage.setScene(loginScene.getScene());
         stage.setTitle("Manage Your Classes");
-        // stage.setResizable(false);
+        stage.setResizable(false);
         stage.setWidth(700);
         stage.setHeight(600);
-        // stage.setMaximized(true);
+        stage.setMaximized(true);
         stage.setMinWidth(700);
         stage.setMinHeight(600);
         stage.getIcons().add(new Image(getClass().getResourceAsStream("ressources/images/logo.png")));

@@ -1,336 +1,350 @@
-// Importing necessary JavaFX classes
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
+import controllers.Session;
+import static controllers.recupData.*;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+import javafx.geometry.*;
+import javafx.scene.image.Image;
 import javafx.scene.text.Font;
-
-// Importing necessary SQL classes
+import javafx.scene.image.ImageView;
+import javafx.scene.shape.Circle;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-// Main class for EnseignantScene
+import models.*;
+
 public class EnseignantScene {
 
-    // Database connection details
-    private static final String DB_URL = "jdbc:mysql://localhost:3306/cdt";
-    private static final String DB_USER = "root";
-    private static final String DB_PASSWORD = "";
-
-    // Scene object for the UI
     private Scene scene;
 
-    // Constructor for EnseignantScene
     public EnseignantScene(MainApp mainApp) {
-        // Example ID for the teacher
-        int id = 42;
-        // Retrieve teacher's first name
+        Session session = Session.getInstance();
+        int id = session.getId();
+        // int id = 24;
         String firstName = recupNames(id);
-        // Retrieve teacher's department name
-        String departementName = recupDepartment(id);
+        System.out.println("Session ID: " + id + ", First Name: " + firstName);
+        // chargement des images
+        Image logoImage = new Image(getClass().getResource("ressources/images/uidt.jpeg").toExternalForm());
+        // Créer un ImageView pour afficher l'image
+        ImageView logoImageView = new ImageView(logoImage);
+        // Ajuster la taille de l'image
+        logoImageView.getStyleClass().add("logo-image");
+        logoImageView.setPreserveRatio(true);
+        // Arrondir les bords de l'image
+        Circle clip = new Circle(64, 66, 60);
+        logoImageView.setClip(clip);
 
-        // Main horizontal layout
+        Image homeIcon = new Image(getClass().getResource("ressources/images/home1.png").toExternalForm());
+        ImageView homeIconView = new ImageView(homeIcon);
+        homeIconView.setFitWidth(30);
+        homeIconView.setFitHeight(30);
+
+        Image notificationIcon = new Image(getClass().getResource("ressources/images/notification2.png").toExternalForm());
+        ImageView notificationIconView = new ImageView(notificationIcon);
+        notificationIconView.setFitWidth(30);
+        notificationIconView.setFitHeight(30);
+
+        Image accountIcon = new Image(getClass().getResource("ressources/images/account.png").toExternalForm());
+        Image accountIconleftPanel = new Image(getClass().getResource("ressources/images/setting.png").toExternalForm());
+        ImageView accountIconView = new ImageView(accountIcon);
+        ImageView accountIconLeftPanelView = new ImageView(accountIconleftPanel);
+        accountIconView.setFitWidth(30);
+        accountIconLeftPanelView.setFitWidth(30);
+        accountIconView.setFitHeight(30);
+        accountIconLeftPanelView.setFitHeight(30);
+
         HBox primaryPanel = new HBox();
+        // primaryPanel.setPadding(new Insets(20));
         primaryPanel.getStyleClass().add("primary-panel");
 
-        // Create left panel
-        BorderPane leftPanel = createLeftPanel();
-
-        // Create right panel
-        VBox rightPanel = createRightPanel(firstName, departementName);
-
-        // Add left and right panels to the main layout
-        primaryPanel.getChildren().addAll(leftPanel, rightPanel);
-        // Set width proportions for left and right panels
-        leftPanel.prefWidthProperty().bind(primaryPanel.widthProperty().multiply(0.15));
-        rightPanel.prefWidthProperty().bind(primaryPanel.widthProperty().multiply(0.85));
-
-        // Initialize the scene with the main layout
-        this.scene = new Scene(primaryPanel);
-    }
-
-    // Getter for the scene
-    public Scene getScene() {
-        return scene;
-    }
-
-    // Method to create the left panel
-    private BorderPane createLeftPanel() {
-        // Create a BorderPane for the left panel
+        // left Part ===================================================================
         BorderPane leftBorderPane = new BorderPane();
+        // leftBorderPane.setPadding(new Insets(20));
         leftBorderPane.getStyleClass().add("left-border-pane");
 
-        // Create top and center sections for the left panel
-        VBox topSection = createLeftPanelTop();
-        VBox centerSection = createLeftPanelCenter();
-
-        // Add top and center sections to the left panel
-        leftBorderPane.setTop(topSection);
-        leftBorderPane.setCenter(centerSection);
-
-        return leftBorderPane;
-    }
-
-    // Method to create the top section of the left panel
-    private VBox createLeftPanelTop() {
-        // Create a VBox for the top section
         VBox leftBorderPaneTop = new VBox();
+        // leftBorderPaneTop.setPadding(new Insets(0, 20, 0, 20));
         leftBorderPaneTop.getStyleClass().add("left-border-pane-top");
         leftBorderPaneTop.setAlignment(Pos.CENTER);
         leftBorderPaneTop.setPrefHeight(200);
 
-        // Add a logo image to the top section
-        Image logoImage = new Image(getClass().getResource("ressources/images/uidt.jpeg").toExternalForm());
-        ImageView logoImageView = new ImageView(logoImage);
-        logoImageView.setPreserveRatio(true);
-
         leftBorderPaneTop.getChildren().add(logoImageView);
-        return leftBorderPaneTop;
-    }
 
-    // Method to create the center section of the left panel
-    private VBox createLeftPanelCenter() {
-        // Create a VBox for the center section
         VBox leftBorderPaneCenter = new VBox(20);
-        leftBorderPaneCenter.setPadding(new Insets(20));
+        leftBorderPaneCenter.setPadding(new Insets(20, 20, 20, 20));
         leftBorderPaneCenter.getStyleClass().add("left-border-pane-center");
+        leftBorderPaneCenter.setPrefHeight(300);
         leftBorderPaneCenter.setAlignment(Pos.TOP_CENTER);
 
-        // Create buttons for the center section
-        Button homeButton = createButton("Home", "ressources/images/home1.png");
-        Button notificationButton = createButton("Notification", "ressources/images/notification2.png");
-        Button accountButton = createButton("Settings", "ressources/images/setting.png");
+        Button homeButton = new Button("Home");
+        homeButton.setGraphic(homeIconView);
+        homeButton.setAlignment(Pos.CENTER_LEFT);
+        homeButton.setStyle("-fx-content-display: left; -fx-font-size: 14px; -fx-pref-width: 160px; -fx-font-size: 18px;");
 
-        // Add buttons to the center section
+        Button notificationButton = new Button("Notification");
+        notificationButton.setGraphic(notificationIconView);
+        notificationButton.setAlignment(Pos.CENTER_LEFT);
+        notificationButton.setStyle("-fx-content-display: left; -fx-font-size: 14px; -fx-pref-width: 160px; -fx-font-size: 18px;");
+
+        Button accountButton = new Button("Settings");
+        accountButton.setGraphic(accountIconLeftPanelView);
+        accountButton.setAlignment(Pos.CENTER_LEFT);
+        accountButton.setStyle("-fx-content-display: left; -fx-font-size: 14px; -fx-pref-width: 160px; -fx-font-size: 18px;");
+
         leftBorderPaneCenter.getChildren().addAll(homeButton, notificationButton, accountButton);
-        return leftBorderPaneCenter;
-    }
+        leftBorderPaneCenter.setAlignment(Pos.CENTER_LEFT);
+        VBox leftBorderPaneBottom = new VBox();
+        // leftBorderPaneBottom.setPadding(new Insets(0, 20, 0, 20));
+        leftBorderPaneBottom.getStyleClass().add("left-border-pane-bottom");
+        leftBorderPaneBottom.setPrefHeight(300);
 
-    // Method to create a button with an icon
-    private Button createButton(String text, String iconPath) {
-        // Load the icon image
-        Image icon = new Image(getClass().getResource(iconPath).toExternalForm());
-        ImageView iconView = new ImageView(icon);
-        iconView.setFitWidth(30);
-        iconView.setFitHeight(30);
+        // Ajout des composant au leftBorderPaneTop
+        leftBorderPane.setTop(leftBorderPaneTop);
+        leftBorderPane.setCenter(leftBorderPaneCenter);
+        leftBorderPane.setBottom(leftBorderPaneBottom);
 
-        // Create a button and set its properties
-        Button button = new Button(text);
-        button.setGraphic(iconView);
-        button.setStyle("-fx-content-display: left; -fx-font-size: 14px; -fx-pref-width: 160px; -fx-font-size: 18px;");
-        return button;
-    }
-
-    // Method to create the right panel
-    private VBox createRightPanel(String firstName, String departementName) {
-        // Create a VBox for the right panel
+        // Right Part ==================================================================================================================
         VBox rightPanelBox = new VBox(20);
         rightPanelBox.setPadding(new Insets(20));
         rightPanelBox.getStyleClass().add("right-panel-box");
 
-        // Create sections for the right panel
-        HBox topSection = createRightPanelTop(firstName);
-        HBox middleSection = createRightPanelMiddle(departementName);
-        HBox centerSection = createRightPanelCenter();
-        HBox bottomSection = createRightPanelBottom();
-
-        // Add sections to the right panel
-        rightPanelBox.getChildren().addAll(topSection, middleSection, centerSection, bottomSection);
-        return rightPanelBox;
-    }
-
-    // Method to create the top section of the right panel
-    private HBox createRightPanelTop(String firstName) {
-        // Create an HBox for the top section
         HBox rightPanelBoxTop = new HBox();
         rightPanelBoxTop.setPadding(new Insets(20));
         rightPanelBoxTop.getStyleClass().add("right-panel-box-top");
         rightPanelBoxTop.setAlignment(Pos.CENTER);
+        rightPanelBoxTop.setPrefHeight(70);
 
-        // Add a title label to the top section
+        // Titre en haut ---------------------------------------------------------------------
         Label titleLabel = new Label("Dashboard - Espace Enseignant");
-        titleLabel.setStyle("-fx-font-size: 30px;-fx-font-smoothing-type: lcd;-fx-text-fill: #383A86; -fx-font-weight: bold;-fx-font-family: 'Century Gothic';");
+        titleLabel.setStyle("-fx-font-size: 30px;-fx-font-smoothing-type: lcd;-fx-text-fill: #383A86; -fx-font-weight: bold;-fx-font-family: 'Poppins';");
+        titleLabel.setFont(Font.loadFont("ressources/fonts/Poppins-Black.ttf", 30));
+        titleLabel.getStyleClass().add("title-label");
 
-        // Create an account box with the teacher's name and icon
         HBox accountBox = new HBox(20);
         accountBox.setPadding(new Insets(0, 20, 0, 20));
         Label accountLabel = new Label(firstName);
         accountLabel.setStyle("-fx-font-size: 24px;-fx-font-smoothing-type: lcd;-fx-text-fill: white; -fx-font-weight: bold;-fx-font-family: 'Poppins';");
-
-        Image accountIcon = new Image(getClass().getResource("ressources/images/account.png").toExternalForm());
-        ImageView accountIconView = new ImageView(accountIcon);
-        accountIconView.setFitWidth(30);
-        accountIconView.setFitHeight(30);
-
+        accountBox.getStyleClass().add("account-box");
+        accountBox.setAlignment(Pos.CENTER_RIGHT);
         accountBox.getChildren().addAll(accountLabel, accountIconView);
+
         rightPanelBoxTop.getChildren().addAll(titleLabel, accountBox);
+        titleLabel.prefWidthProperty().bind(rightPanelBoxTop.widthProperty().multiply(0.7));
+        accountBox.prefWidthProperty().bind(rightPanelBoxTop.widthProperty().multiply(0.3));
 
-        return rightPanelBoxTop;
-    }
-
-    // Method to create the middle section of the right panel
-    private HBox createRightPanelMiddle(String departementName) {
-        // Create an HBox for the middle section
         HBox rightPanelBoxMiddle = new HBox(20);
         rightPanelBoxMiddle.setPadding(new Insets(20));
         rightPanelBoxMiddle.getStyleClass().add("right-panel-box-middle");
         rightPanelBoxMiddle.setAlignment(Pos.CENTER_LEFT);
+        rightPanelBoxMiddle.setPrefHeight(100);
 
-        // Add a label for the department name
-        Label departement = new Label("Departement : " + departementName);
-        departement.setStyle("-fx-font-size: 24px;-fx-font-smoothing-type: lcd;-fx-text-fill: #383A86; -fx-font-weight: bold;-fx-font-family: 'Poppins';");
+        Label classe = new Label("Classe: Licence 2 Informatique");
+        classe.setStyle("-fx-font-size: 24px;-fx-font-smoothing-type: lcd;-fx-text-fill: #383A86; -fx-font-weight: bold;-fx-font-family: 'Poppins';");
 
-        rightPanelBoxMiddle.getChildren().add(departement);
-        return rightPanelBoxMiddle;
-    }
+        rightPanelBoxMiddle.getChildren().addAll(classe);
 
-    // Method to create the center section of the right panel
-    private HBox createRightPanelCenter() {
-        // Create an HBox for the center section
-        HBox rightPanelBoxCenter = new HBox(2);
-        rightPanelBoxCenter.setPadding(new Insets(2));
+        HBox rightPanelBoxCenter = new HBox(20);
+        rightPanelBoxCenter.setPadding(new Insets(20));
         rightPanelBoxCenter.getStyleClass().add("right-panel-box-center");
-        rightPanelBoxCenter.setAlignment(Pos.CENTER);
+        rightPanelBoxCenter.setAlignment(Pos.CENTER_LEFT);
+        rightPanelBoxCenter.setPrefHeight(400);
 
-        // Create boxes for assigning courses and showing students
-        VBox assignCourseMainBox = createAssignCourseBox();
-        VBox showStudentMainBox = createShowStudentBox();
+        TitledPane titledPane = new TitledPane();
+        titledPane.setText("Activites Recentes");
+        VBox rightPanelBoxCenterLeft = new VBox(20);
+        rightPanelBoxCenterLeft.setPadding(new Insets(20));
+        rightPanelBoxCenterLeft.getStyleClass().add("right-panel-box-center-left");
+        rightPanelBoxCenterLeft.setAlignment(Pos.CENTER);
+        titledPane.setContent(rightPanelBoxCenterLeft);
 
-        // Create buttons to toggle between the two boxes
-        VBox actionBox = createActionBox(assignCourseMainBox, showStudentMainBox, rightPanelBoxCenter);
+        String url = "jdbc:mysql://localhost:3306/cdt";
+        String user = "root";
+        String password = "";
 
-        rightPanelBoxCenter.getChildren().addAll(actionBox, showStudentMainBox);
-        return rightPanelBoxCenter;
-    }
+        // insertion Query
+        String allClasses = "SELECT DISTINCT cl.classeName, c.intitule FROM enseignant e INNER JOIN cours c ON e.idPersonnel = c.idPersonnel INNER JOIN fichecours f ON c.idCours = f.idCours INNER JOIN cahierdetexte cdt ON f.idCahierDeTexte = cdt.idCahierDeTexte INNER JOIN classe cl ON cdt.idClasse = cl.idClasse WHERE e.idPersonnel = ? ORDER BY cl.classeName ASC;";
+        try {
+            Connection connection = DriverManager.getConnection(url, user, password);
+            PreparedStatement statement = connection.prepareStatement(allClasses);
+            statement.setInt(1, id);
+            ResultSet result = statement.executeQuery();
 
-    // Method to create the box for assigning courses
-    private VBox createAssignCourseBox() {
-        // Create a VBox for the assign course box
-        VBox assignCourseMainBox = new VBox(10);
-        assignCourseMainBox.setPadding(new Insets(10));
-        assignCourseMainBox.setAlignment(Pos.CENTER_LEFT);
+            // System.out.println("Le cahier de texte" + this.classe);
+            int i = 0;
+            while (result.next()) {
+                GridPane rightPanelBoxCenterLeftGrid = new GridPane();
+                rightPanelBoxCenterLeftGrid.setVgap(1);
+                rightPanelBoxCenterLeftGrid.setHgap(1);
+                rightPanelBoxCenterLeftGrid.getStyleClass().add("right-panel-box-center-left-grid");
+                rightPanelBoxCenterLeftGrid.setAlignment(Pos.CENTER_LEFT);
+                rightPanelBoxCenterLeftGrid.setPrefWidth(50);
 
-        // Create choice boxes for professors and courses
-        ChoiceBox<String> profList = new ChoiceBox<>();
+                Label classeLabel = new Label(result.getString("cl.classeName"));
+                classeLabel.setStyle("-fx-font-size: 12px;-fx-font-smoothing-type: lcd;-fx-text-fill: black; -fx-font-weight: bold;-fx-font-family: 'Poppins';");
+                Label courseLabel = new Label(result.getString("c.intitule"));
+                courseLabel.setStyle("-fx-font-size: 16spx;-fx-font-smoothing-type: lcd;-fx-text-fill: #383A86; -fx-font-weight: bold;-fx-font-family: 'Poppins';");
+
+                rightPanelBoxCenterLeftGrid.setConstraints(classeLabel, 0, 1, 3, 1);
+                rightPanelBoxCenterLeftGrid.getChildren().add(classeLabel);
+                rightPanelBoxCenterLeftGrid.setConstraints(courseLabel, 0, 0, 3, 1);
+                rightPanelBoxCenterLeftGrid.getChildren().add(courseLabel);
+
+                rightPanelBoxCenterLeft.getChildren().add(rightPanelBoxCenterLeftGrid);
+                rightPanelBoxCenterLeftGrid.setStyle(" -fx-padding: 20px; -fx-text-fill: black; -fx-font-size: 18px;");
+                i++;
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("erreur");
+        }
+
+
+        VBox rightPanelBoxCenterCenter = new VBox(20);
+        rightPanelBoxCenterCenter.setPadding(new Insets(20));
+        rightPanelBoxCenterCenter.getStyleClass().add("right-panel-box-center-center");
+        rightPanelBoxCenterCenter.setAlignment(Pos.CENTER_LEFT);
+
+        ChoiceBox<String> classeList = new ChoiceBox<>();
         ChoiceBox<String> courseList = new ChoiceBox<>();
+        TextArea detailsArea = new TextArea();
+        detailsArea.setPromptText("Ajouter les details du cours ici...");
+        detailsArea.setStyle("-fx-font-size: 14px; -fx-pref-width: 200px; -fx-padding: 0px; -fx-text-fill: black;");
+        Button addDetailsButton = new Button("Ajouter");
+        addDetailsButton.setStyle("-fx-font-size: 14px; -fx-pref-width: 150px; -fx-text-fill: black;");
 
-        // Populate the choice boxes with data
-        profList.getItems().addAll(getAllProfessors());
-        courseList.getItems().addAll(getAllCourses());
-
-        // Set styles for the choice boxes
-        profList.setStyle("-fx-font-size: 14px; -fx-pref-width: 200px; -fx-padding: 10px; -fx-background-color: #383A86; -fx-text-fill: white;");
-        courseList.setStyle("-fx-font-size: 14px; -fx-pref-width: 200px; -fx-padding: 10px; -fx-background-color: #383A86; -fx-text-fill: white;");
-
-        assignCourseMainBox.getChildren().addAll(profList, courseList);
-        return assignCourseMainBox;
-    }
-
-    // Method to create the box for showing students
-    private VBox createShowStudentBox() {
-        // Create a VBox for the show student box
-        VBox showStudentMainBox = new VBox(10);
-        showStudentMainBox.setPadding(new Insets(10));
-        showStudentMainBox.setAlignment(Pos.CENTER);
-
-        // Add a header label and a list view for students
-        Label header = new Label("Liste des étudiants");
-        header.setStyle("-fx-font-size: 18px; -fx-font-weight: bold;");
-
-        ListView<String> studentList = new ListView<>();
-        studentList.getItems().addAll("Étudiant 1", "Étudiant 2", "Étudiant 3");
-
-        showStudentMainBox.getChildren().addAll(header, studentList);
-        return showStudentMainBox;
-    }
-
-    // Method to create the action box for toggling between assign course and show student boxes
-    private VBox createActionBox(VBox assignCourseMainBox, VBox showStudentMainBox, HBox rightPanelBoxCenter) {
-        // Create a VBox for the action box
-        VBox actionBox = new VBox(20);
-        actionBox.setPadding(new Insets(20));
-        actionBox.setAlignment(Pos.CENTER);
-
-        // Create buttons for toggling
-        Button assignCourseButton = new Button("Assigner un cours");
-        assignCourseButton.setOnAction(event -> {
-            rightPanelBoxCenter.getChildren().clear();
-            rightPanelBoxCenter.getChildren().addAll(actionBox, assignCourseMainBox);
+        addDetailsButton.setOnAction(event -> {
+            String classeName = classeList.getValue();
+            String intitule = courseList.getValue();
+            String details = detailsArea.getText();
+            // System.out.println(classeName + " " + intitule + " " + details);
+            // Appel de la méthode pour ajouter le cours et les détails
+            Enseignant e =new Enseignant(new Personne(recupFirstName(id), recupLastName(id), recupEmail(id), recupPhoneNumber(id)), id, recupSpecialite(id));
+            Fiche f = e.addCoursDetails(classeName, intitule, details);
         });
 
-        Button showStudentButton = new Button("Afficher les étudiants");
-        showStudentButton.setOnAction(event -> {
-            rightPanelBoxCenter.getChildren().clear();
-            rightPanelBoxCenter.getChildren().addAll(actionBox, showStudentMainBox);
+
+        try {
+            Connection connection = DriverManager.getConnection(url, user, password);
+            PreparedStatement statement = connection.prepareStatement(allClasses);
+            statement.setInt(1, id);
+            ResultSet result = statement.executeQuery();
+
+            // System.out.println("Le cahier de texte" + this.classe);
+            int i = 0;
+            while (result.next()) {
+                classeList.getItems().add(result.getString("cl.classeName"));
+                courseList.getItems().add(result.getString("c.intitule"));
+
+            }
+            classeList.setStyle("-fx-font-size: 14px; -fx-pref-width: 200px; -fx-padding: 10px; -fx-background-color: #383A86; -fx-text-fill: white;");
+            classeList.setValue("Sélectionnez une classe"); // Valeur par défaut
+            courseList.setStyle("-fx-font-size: 14px; -fx-pref-width: 200px; -fx-padding: 10px; -fx-background-color: #383A86; -fx-text-fill: white;");
+            courseList.setValue("Sélectionnez un cours"); // Valeur par défaut
+
+            rightPanelBoxCenterCenter.getChildren().addAll(classeList, courseList);
+            classeList.setStyle("-fx-font-size: 14px; -fx-pref-width: 200px; -fx-padding: 10px; -fx-text-fill: black;");
+            courseList.setStyle("-fx-font-size: 14px; -fx-pref-width: 200px; -fx-padding: 10px; -fx-text-fill: black;");
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("erreur");
+        }
+
+        rightPanelBoxCenterCenter.getChildren().addAll(detailsArea, addDetailsButton);
+        // Créer un ScrollPane et y placer le VBox
+        ScrollPane scrollPane = new ScrollPane();
+        scrollPane.setContent(titledPane);
+
+        scrollPane.setFitToWidth(true);
+        scrollPane.setPannable(true);
+
+        VBox rightPanelBoxCenterRight = new VBox(20);
+        rightPanelBoxCenterRight.setPadding(new Insets(20));
+        rightPanelBoxCenterRight.getStyleClass().add("right-panel-box-center-right");
+        rightPanelBoxCenterRight.setAlignment(Pos.CENTER);
+
+        // Charger les images des bouton
+        Image viewTextBookIcon = new Image(getClass().getResource("ressources/images/visitBook.png").toExternalForm());
+        ImageView viewTextBookIconView = new ImageView(viewTextBookIcon);
+        viewTextBookIconView.setFitWidth(30);
+        viewTextBookIconView.setFitHeight(30);
+
+        Image validateContentIcon = new Image(getClass().getResource("ressources/images/validContent.png").toExternalForm());
+        ImageView validateContentIconView = new ImageView(validateContentIcon);
+        validateContentIconView.setFitWidth(30);
+        validateContentIconView.setFitHeight(30);
+
+        Image logOutIcon = new Image(getClass().getResource("ressources/images/logOut1.png").toExternalForm());
+        ImageView logOutIconView = new ImageView(logOutIcon);
+        logOutIconView.setFitWidth(30);
+        logOutIconView.setFitHeight(30);
+
+        Button showCourses = new Button("Voir la liste de mes cours");
+        showCourses.setGraphic(viewTextBookIconView);
+        showCourses.setStyle("-fx-content-display: top; -fx-pref-width: 200px; -fx-font-size: 14px;");
+
+        showCourses.setOnAction(event -> {
+            rightPanelBoxCenter.getChildren().add(scrollPane);
+            rightPanelBoxCenter.getChildren().remove(rightPanelBoxCenterCenter);
         });
 
-        actionBox.getChildren().addAll(assignCourseButton, showStudentButton);
-        return actionBox;
-    }
 
-    // Method to create the bottom section of the right panel
-    private HBox createRightPanelBottom() {
-        // Create an HBox for the bottom section
+
+
+        Button logOutButton = new Button("Se Deconnecter");
+        logOutButton.setGraphic(logOutIconView);
+        logOutButton.setStyle("-fx-content-display: top; -fx-pref-width: 200px; -fx-font-size: 14px;");
+        logOutButton.setOnAction(event -> {
+            LoginScene loginScene = new LoginScene(mainApp);
+            loginScene.getScene().getStylesheets().add(getClass().getResource("ressources/css/style.css").toExternalForm());
+            mainApp.changeScene(loginScene.getScene());
+        });
+
+
+
+
+        Button addCourseContent = new Button("Ajouter un Contenu");
+        addCourseContent.setGraphic(validateContentIconView);
+        addCourseContent.setStyle("-fx-content-display: top; -fx-pref-width: 200px; -fx-font-size: 14px;");
+
+        addCourseContent.setOnAction(event -> {
+            rightPanelBoxCenter.getChildren().add(rightPanelBoxCenterCenter);
+            rightPanelBoxCenter.getChildren().remove(scrollPane);
+        });
+        rightPanelBoxCenterRight.getChildren().addAll(showCourses, addCourseContent, logOutButton);
+
+
+
+        rightPanelBoxCenter.getChildren().add(rightPanelBoxCenterRight);
+        rightPanelBoxCenterLeft.prefWidthProperty().bind(rightPanelBoxCenter.widthProperty().multiply(0.6));
+        rightPanelBoxCenterCenter.prefWidthProperty().bind(rightPanelBoxCenter.widthProperty().multiply(0.6));
+        rightPanelBoxCenterRight.prefWidthProperty().bind(rightPanelBoxCenter.widthProperty().multiply(0.3));
+
         HBox rightPanelBoxBottom = new HBox();
         rightPanelBoxBottom.setPadding(new Insets(20));
         rightPanelBoxBottom.getStyleClass().add("right-panel-box-bottom");
         rightPanelBoxBottom.setAlignment(Pos.CENTER);
-
-        // Add a footer label
+        rightPanelBoxBottom.setPrefHeight(90);
+        rightPanelBoxBottom.getStyleClass().add("bottom-panel");
+        rightPanelBoxBottom.setStyle("-fx-background-color: #2E2E2E; -fx-padding: 10px; -fx-alignment: center;");
         Label footerText = new Label("© 2025 Manage Your Classes - All rights reserved");
         footerText.setStyle("-fx-text-fill: white; -fx-font-size: 14px;");
-        rightPanelBoxBottom.getChildren().add(footerText);
+        rightPanelBoxBottom.getChildren().addAll(footerText);
 
-        return rightPanelBoxBottom;
+        rightPanelBox.getChildren().addAll(rightPanelBoxTop, rightPanelBoxMiddle, rightPanelBoxCenter, rightPanelBoxBottom);
+
+        // Ajout du leftBorderPane au primaryPanel
+        primaryPanel.getChildren().addAll(leftBorderPane, rightPanelBox);
+        leftBorderPane.prefWidthProperty().bind(primaryPanel.widthProperty().multiply(0.15));
+        rightPanelBox.prefWidthProperty().bind(primaryPanel.widthProperty().multiply(0.85));
+
+        this.scene = new Scene(primaryPanel);
     }
 
-    // Method to retrieve all courses from the database
-    private ObservableList<String> getAllCourses() {
-        // Create an observable list for courses
-        ObservableList<String> courses = FXCollections.observableArrayList();
-        String query = "SELECT intitule FROM cours";
-
-        // Execute the query and populate the list
-        try (Connection connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
-             PreparedStatement statement = connection.prepareStatement(query);
-             ResultSet resultSet = statement.executeQuery()) {
-
-            while (resultSet.next()) {
-                courses.add(resultSet.getString("intitule"));
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return courses;
-    }
-
-    // Method to retrieve all professors from the database
-    private ObservableList<String> getAllProfessors() {
-        // Create an observable list for professors
-        ObservableList<String> professors = FXCollections.observableArrayList();
-        String query = "SELECT p.firstName, p.lastName FROM personnel p INNER JOIN enseignant e ON p.idPersonnel = e.idPersonnel";
-
-        // Execute the query and populate the list
-        try (Connection connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
-             PreparedStatement statement = connection.prepareStatement(query);
-             ResultSet resultSet = statement.executeQuery()) {
-
-            while (resultSet.next()) {
-                String fullName = resultSet.getString("firstName") + " " + resultSet.getString("lastName");
-                professors.add(fullName);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return professors;
+    public Scene getScene() {
+        return scene;
     }
 }
