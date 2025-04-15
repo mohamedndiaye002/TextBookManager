@@ -5,7 +5,6 @@ import models.*;
 
 // import static models.Fiche.*;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.geometry.*;
@@ -169,9 +168,6 @@ public class ChefDepartementScene {
         rightPanelBoxCenterTitledPane.setText("Cahier de Texte"); // Sets the title text.
         rightPanelBoxCenterTitledPane.setStyle("-fx-font-size: 22px; -fx-font-weight: bold;"); // Styling for the titled pane.
 
-        TitledPane rightPanelBoxCenterTitledPaneValid = new TitledPane(); // Titled pane for "Contenu ajouter par l'enseignant".
-        rightPanelBoxCenterTitledPaneValid.setText("Contenu ajouter par l'enseignant"); // Sets the title text.
-        rightPanelBoxCenterTitledPaneValid.setStyle("-fx-font-size: 22px; -fx-font-weight: bold;"); // Styling for the titled pane.
 
         VBox rightPanelBoxCenterLeft = new VBox(20); // Left section of the center panel.
         rightPanelBoxCenterLeft.setPadding(new Insets(20)); // Adds padding around the left section.
@@ -179,21 +175,56 @@ public class ChefDepartementScene {
         rightPanelBoxCenterLeft.setAlignment(Pos.CENTER); // Centers the content horizontally.
         rightPanelBoxCenterTitledPane.setContent(rightPanelBoxCenterLeft); // Sets the content of the titled pane.
 
-        VBox rightPanelBoxCenterCenter = new VBox(20); // Center section of the center panel.
-        rightPanelBoxCenterCenter.setPadding(new Insets(20)); // Adds padding around the center section.
-        rightPanelBoxCenterCenter.getStyleClass().add("right-panel-box-center-center"); // Adds a CSS style class for styling.
-        rightPanelBoxCenterCenter.setAlignment(Pos.CENTER); // Centers the content horizontally.
-        rightPanelBoxCenterTitledPaneValid.setContent(rightPanelBoxCenterCenter); // Sets the content of the titled pane.
+        GridPane addPersonalBox = new GridPane(); // Center section of the center panel.
+        addPersonalBox.setPadding(new Insets(20)); // Adds padding around the center section.
+        addPersonalBox.getStyleClass().add("right-panel-box-center-center"); // Adds a CSS style class for styling.
+        // addPersonalBox.setAlignment(Pos.Left); // Centers the content horizontally.
+        addPersonalBox.setStyle("-fx-border-witdh: 1px; -fx-border-color: blue; -fx-border-style: solid");
+
+
+        // le champ du prenom
+
+        TextField persFirstName = new TextField();
+        TextField persLastName = new TextField();
+        TextField persPhone = new TextField();
+        TextField persEmail = new TextField();
+        TextField persSpecialite = new TextField();
+        Button addProfButton = new Button("Ajouter");
+        addPersonalBox.setConstraints(addProfButton, 0, 5, 2, 1);
+
+        addPersonalBox.add(new Label("Prenom"), 0, 0);
+        addPersonalBox.add(persFirstName, 1, 0);
+        addPersonalBox.setMargin(persFirstName, new Insets(10, 0, 10, 50));
+        persFirstName.setPrefHeight(40);
+        
+        addPersonalBox.add(new Label("Nom"), 0, 1);
+        addPersonalBox.add(persLastName, 1, 1);
+        addPersonalBox.setMargin(persLastName, new Insets(10, 0, 10, 50));
+        persLastName.setPrefHeight(40);
+        
+        addPersonalBox.add(new Label("Telephone"), 0, 2);
+        addPersonalBox.add(persPhone, 1, 2);
+        addPersonalBox.setMargin(persPhone, new Insets(10, 0, 10, 50));
+        persPhone.setPrefHeight(40);
+        
+        addPersonalBox.add(new Label("Email"), 0, 3);
+        addPersonalBox.add(persEmail, 1, 3);
+        addPersonalBox.setMargin(persEmail, new Insets(10, 0, 10, 50));
+        persEmail.setPrefHeight(40);
+        
+        addPersonalBox.add(new Label("Specialite"), 0, 4);
+        addPersonalBox.add(persSpecialite, 1, 4);
+        addPersonalBox.setMargin(persSpecialite, new Insets(10, 0, 10, 50));
+        persSpecialite.setPrefHeight(40);
+        
+        addPersonalBox.getChildren().add(addProfButton);
+
 
         ScrollPane scrollPane = new ScrollPane(); // Scroll pane for the "Cahier de Texte".
         scrollPane.setContent(rightPanelBoxCenterTitledPane); // Sets the content of the scroll pane.
         scrollPane.setFitToWidth(true); // Ensures the content fits the width of the scroll pane.
         scrollPane.setPannable(true); // Allows panning within the scroll pane.
 
-        ScrollPane scrollPaneValid = new ScrollPane(); // Scroll pane for "Contenu ajouter par l'enseignant".
-        scrollPaneValid.setContent(rightPanelBoxCenterTitledPaneValid); // Sets the content of the scroll pane.
-        scrollPaneValid.setFitToWidth(true); // Ensures the content fits the width of the scroll pane.
-        scrollPaneValid.setPannable(true); // Allows panning within the scroll pane.
 
         GridPane actionGridPane = new GridPane();
         actionGridPane.setVgap(10);
@@ -202,40 +233,12 @@ public class ChefDepartementScene {
         actionGridPane.setAlignment(Pos.CENTER);
         actionGridPane.setStyle("-fx-border-color: black; -fx-border-width: 2px; -fx-border-radius: 5px; -fx-padding: 10px;");
 
-        // Labels for headers
-        Label dateHeader = new Label("Date");
-        Label courseHeader = new Label("Cours");
-        Label teacherHeader = new Label("Enseignant");
-        Label detailsHeader = new Label("Details");
-
-        // Styling headers
-        dateHeader.setStyle("-fx-font-size: 16px; -fx-font-weight: bold; -fx-underline: true;");
-        courseHeader.setStyle("-fx-font-size: 16px; -fx-font-weight: bold; -fx-underline: true;");
-        teacherHeader.setStyle("-fx-font-size: 16px; -fx-font-weight: bold; -fx-underline: true;");
-        detailsHeader.setStyle("-fx-font-size: 16px; -fx-font-weight: bold; -fx-underline: true;");
-
-        // Adding headers
-        actionGridPane.add(dateHeader, 0, 0);
-        actionGridPane.add(courseHeader, 0, 1);
-        actionGridPane.add(teacherHeader, 0, 2);
-        actionGridPane.add(detailsHeader, 0, 3);
-
-        Label dateValue = new Label("12/10/2023");
-        Label courseValue = new Label("Mathematiques");
-        Label teacherValue = new Label("M. Dupont");
-        Label detailsValue = new Label("Introduction aux matrices");
-
-        // Styling data labels
-        dateValue.setStyle("-fx-font-size: 14px;");
-        courseValue.setStyle("-fx-font-size: 14px;");
-        teacherValue.setStyle("-fx-font-size: 14px;");
-        detailsValue.setStyle("-fx-font-size: 14px;");
 
         // Adding data to the gridPane
-        actionGridPane.add(dateValue, 2, 0);
-        actionGridPane.add(courseValue, 2, 1);
-        actionGridPane.add(teacherValue, 2, 2);
-        actionGridPane.add(detailsValue, 2, 3);
+        // actionGridPane.add(dateValue, 2, 0);
+        // actionGridPane.add(courseValue, 2, 1);
+        // actionGridPane.add(teacherValue, 2, 2);
+        // actionGridPane.add(detailsValue, 2, 3);
         LinkedList<Fiche> Fiches = new LinkedList<>();
 
         Button rejectButton = new Button("Refuser");
@@ -254,7 +257,7 @@ public class ChefDepartementScene {
         GridPane.setHalignment(rejectButton, HPos.CENTER);
 
         // Adding the gridPane to the rightPanelBoxCenter
-        // rightPanelBoxCenterCenter.getChildren().add(actionGridPane);
+        // addPersonalBox.getChildren().add(actionGridPane);
         String url = "jdbc:mysql://localhost:3306/cdt";
         String user = "root";
         String password = "";
@@ -317,12 +320,12 @@ public class ChefDepartementScene {
             i = 0;
             // -- --------------------------------------------------------------------------------------------------------
             while (resultValid.next()) {
-                GridPane rightPanelBoxCenterCenterGrid = new GridPane();
-                rightPanelBoxCenterCenterGrid.setVgap(1);
-                rightPanelBoxCenterCenterGrid.setHgap(1);
-                rightPanelBoxCenterCenterGrid.getStyleClass().add("right-panel-box-center-center-grid");
-                rightPanelBoxCenterCenterGrid.setAlignment(Pos.CENTER_LEFT);
-                rightPanelBoxCenterCenterGrid.setPrefWidth(50);
+                GridPane addPersonalBoxGrid = new GridPane();
+                addPersonalBoxGrid.setVgap(1);
+                addPersonalBoxGrid.setHgap(1);
+                addPersonalBoxGrid.getStyleClass().add("right-panel-box-center-center-grid");
+                addPersonalBoxGrid.setAlignment(Pos.CENTER_LEFT);
+                addPersonalBoxGrid.setPrefWidth(50);
 
                 Label courseLabelValid = new Label(resultValid.getString("f.details"));
                 courseLabelValid.setStyle("-fx-font-size: 14px;-fx-font-smoothing-type: lcd;-fx-text-fill: black; -fx-font-weight: bold;-fx-font-family: 'Poppins';");
@@ -334,22 +337,22 @@ public class ChefDepartementScene {
                 Button verifyCourseDetailsButton = new Button("Verifier le contenu");
                 verifyCourseDetailsButton.setStyle("-fx-pref-width: 200px; -fx-font-size: 14px; -fx-background-color: #383A86; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 10px; -fx-border-radius: 5px; -fx-background-radius: 5px;");
 
-                rightPanelBoxCenterCenterGrid.setConstraints(courseLabelValid, 0, 0, 3, 1);
-                rightPanelBoxCenterCenterGrid.setConstraints(verifyCourseDetailsButton, 1, 0, 1, 2);
-                rightPanelBoxCenterCenterGrid.getChildren().add(courseLabelValid);
-                rightPanelBoxCenterCenterGrid.add(courseDateLabel, 0, 1);
-                rightPanelBoxCenterCenterGrid.getChildren().add(verifyCourseDetailsButton);
-                rightPanelBoxCenterCenterGrid.setMargin(verifyCourseDetailsButton, new Insets(0, 0, 0, 300));
+                addPersonalBoxGrid.setConstraints(courseLabelValid, 0, 0, 3, 1);
+                addPersonalBoxGrid.setConstraints(verifyCourseDetailsButton, 1, 0, 1, 2);
+                addPersonalBoxGrid.getChildren().add(courseLabelValid);
+                addPersonalBoxGrid.add(courseDateLabel, 0, 1);
+                addPersonalBoxGrid.getChildren().add(verifyCourseDetailsButton);
+                addPersonalBoxGrid.setMargin(verifyCourseDetailsButton, new Insets(0, 0, 0, 300));
 
-                rightPanelBoxCenterCenter.getChildren().add(rightPanelBoxCenterCenterGrid);
-                rightPanelBoxCenterCenterGrid.setStyle(" -fx-padding: 20px; -fx-text-fill: black; -fx-font-size: 18px;");
+                addPersonalBox.getChildren().add(addPersonalBoxGrid);
+                addPersonalBoxGrid.setStyle(" -fx-padding: 20px; -fx-text-fill: black; -fx-font-size: 18px;");
 
                 verifyCourseDetailsButton.setOnAction(event -> {
-                    if (rightPanelBoxCenterCenterGrid.getChildren().contains(actionGridPane)) {
-                        rightPanelBoxCenterCenterGrid.getChildren().remove(actionGridPane);
+                    if (addPersonalBoxGrid.getChildren().contains(actionGridPane)) {
+                        addPersonalBoxGrid.getChildren().remove(actionGridPane);
                         verifyCourseDetailsButton.setText("Verifier le contenu");
                     } else {
-                        rightPanelBoxCenterCenterGrid.add(actionGridPane, 0, 2, 2, 1);
+                        addPersonalBoxGrid.add(actionGridPane, 0, 2, 2, 1);
                         verifyCourseDetailsButton.setText("Masquer le contenu");
                     }
                     // System.out.println("Vérification du contenu : " + courseLabelValid.getText());
@@ -365,7 +368,7 @@ public class ChefDepartementScene {
                 // });
 
                 // verifyCourseDetailsButton.setOnAction(event -> {
-                //     rightPanelBoxCenterCenterGrid.add(actionGridPane, 0, 2, 2, 1);
+                //     addPersonalBoxGrid.add(actionGridPane, 0, 2, 2, 1);
                 //     System.out.println("Vérification du contenu : " + courseLabelValid.getText());
                 // });
                 i++;
@@ -404,7 +407,7 @@ public class ChefDepartementScene {
 
         addPersonnelIconButton.setOnAction(event -> {
             rightPanelBoxCenter.getChildren().add(scrollPane);
-            rightPanelBoxCenter.getChildren().remove(scrollPaneValid);
+            rightPanelBoxCenter.getChildren().remove(addPersonalBox);
         });
 
         Button assignCourseButton = new Button("Assigner un Cours");
@@ -413,7 +416,7 @@ public class ChefDepartementScene {
 
         assignCourseButton.setOnAction(event -> {
             rightPanelBoxCenter.getChildren().remove(scrollPane);
-            rightPanelBoxCenter.getChildren().add(scrollPaneValid);
+            rightPanelBoxCenter.getChildren().add(addPersonalBox);
         });
 
         Button logOutButton = new Button("Se Deconnecter");
@@ -431,7 +434,7 @@ public class ChefDepartementScene {
         rightPanelBoxCenter.getChildren().addAll(rightPanelBoxCenterRight);
         rightPanelBoxCenter.setAlignment(Pos.CENTER_LEFT);
         scrollPane.prefWidthProperty().bind(rightPanelBoxCenter.widthProperty().multiply(0.6));
-        rightPanelBoxCenterCenter.prefWidthProperty().bind(rightPanelBoxCenter.widthProperty().multiply(0.6));
+        addPersonalBox.prefWidthProperty().bind(rightPanelBoxCenter.widthProperty().multiply(0.6));
         rightPanelBoxCenterRight.prefWidthProperty().bind(rightPanelBoxCenter.widthProperty().multiply(0.3));
 
         HBox rightPanelBoxBottom = new HBox();

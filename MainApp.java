@@ -16,7 +16,7 @@ public class MainApp extends Application {
         this.stage = stage; // Stocker l'objet Stage
 
         // Charger la scène de connexion au démarrage
-        ResponsableScene loginScene = new ResponsableScene(this);
+        ChefDepartementScene loginScene = new ChefDepartementScene(this);
         loginScene.getScene().getStylesheets().add(Objects.requireNonNull(getClass().getResource("ressources/css/style.css")).toExternalForm());
         stage.setScene(loginScene.getScene());
         stage.setTitle("Manage Your Classes");
