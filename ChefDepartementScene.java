@@ -22,7 +22,6 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.LinkedList;
 
-
 public class ChefDepartementScene {
 
     private Scene scene;
@@ -168,63 +167,67 @@ public class ChefDepartementScene {
         rightPanelBoxCenterTitledPane.setText("Cahier de Texte"); // Sets the title text.
         rightPanelBoxCenterTitledPane.setStyle("-fx-font-size: 22px; -fx-font-weight: bold;"); // Styling for the titled pane.
 
-
         VBox rightPanelBoxCenterLeft = new VBox(20); // Left section of the center panel.
         rightPanelBoxCenterLeft.setPadding(new Insets(20)); // Adds padding around the left section.
         rightPanelBoxCenterLeft.getStyleClass().add("right-panel-box-center-left"); // Adds a CSS style class for styling.
         rightPanelBoxCenterLeft.setAlignment(Pos.CENTER); // Centers the content horizontally.
         rightPanelBoxCenterTitledPane.setContent(rightPanelBoxCenterLeft); // Sets the content of the titled pane.
 
-        GridPane addPersonalBox = new GridPane(); // Center section of the center panel.
+        VBox addPersonalBox = new VBox(); // Center section of the center panel.
         addPersonalBox.setPadding(new Insets(20)); // Adds padding around the center section.
         addPersonalBox.getStyleClass().add("right-panel-box-center-center"); // Adds a CSS style class for styling.
         // addPersonalBox.setAlignment(Pos.Left); // Centers the content horizontally.
-        addPersonalBox.setStyle("-fx-border-witdh: 1px; -fx-border-color: blue; -fx-border-style: solid");
+        // addPersonalBox.setStyle("-fx-border-witdh: 1px; -fx-border-color: blue; -fx-border-style: solid");
 
+        HBox addPersonalBoxHead = new HBox();
+        addPersonalBox.setPadding(new Insets(20)); // Adds padding around the center section.
+        addPersonalBoxHead.setPrefHeight(50);
+        addPersonalBoxHead.setStyle("-fx-background-color: gray;");
 
+        
         // le champ du prenom
-
         TextField persFirstName = new TextField();
         TextField persLastName = new TextField();
         TextField persPhone = new TextField();
         TextField persEmail = new TextField();
         TextField persSpecialite = new TextField();
-        Button addProfButton = new Button("Ajouter");
-        addPersonalBox.setConstraints(addProfButton, 0, 5, 2, 1);
+        Button addProfButton = new Button("Ajouter Professeur");
+        
+        addPersonalBox.getChildren().addAll(addPersonalBoxHead, new Label("Prenom"), persFirstName, new Label("Nom"), persLastName, new Label("Telephone"), persPhone, new Label("Email"), persEmail, new Label("Specialite"), persSpecialite, addProfButton);
+        // addPersonalBox.setConstraints(addPersonalBoxHead, 0, 0, 2, 1);
+        // addPersonalBox.getChildren().add(addPersonalBoxHead);
+        
+        addPersonalBox.setMargin(persFirstName, new Insets(0, 0, 20, 0));
+        // addPersonalBox.add(new Label("Prenom"), 0, 1);
+        // addPersonalBox.add(persFirstName, 1, 1);
+        // // persFirstName.setPrefHeight(40);
+        
+        addPersonalBox.setMargin(persLastName, new Insets(0, 0, 20, 0));
+        // addPersonalBox.add(new Label("Nom"), 0, 2);
+        // addPersonalBox.add(persLastName, 1, 2);
+        // // persLastName.setPrefHeight(40);
+        
+        addPersonalBox.setMargin(persPhone, new Insets(0, 0, 20, 0));
+        // addPersonalBox.add(new Label("Telephone"), 0, 3);
+        // addPersonalBox.add(persPhone, 1, 3);
+        // // persPhone.setPrefHeight(40);
+        
+        addPersonalBox.setMargin(persEmail, new Insets(0, 0, 20, 0));
+        // addPersonalBox.add(new Label("Email"), 0, 4);
+        // addPersonalBox.add(persEmail, 1, 4);
+        // // persEmail.setPrefHeight(40);
+        
+        addPersonalBox.setMargin(persSpecialite, new Insets(0, 0, 20, 0));
+        // addPersonalBox.add(new Label("Specialite"), 0, 5);
+        // addPersonalBox.add(persSpecialite, 1, 5);
+        // // persSpecialite.setPrefHeight(40);
 
-        addPersonalBox.add(new Label("Prenom"), 0, 0);
-        addPersonalBox.add(persFirstName, 1, 0);
-        addPersonalBox.setMargin(persFirstName, new Insets(10, 0, 10, 50));
-        persFirstName.setPrefHeight(40);
-        
-        addPersonalBox.add(new Label("Nom"), 0, 1);
-        addPersonalBox.add(persLastName, 1, 1);
-        addPersonalBox.setMargin(persLastName, new Insets(10, 0, 10, 50));
-        persLastName.setPrefHeight(40);
-        
-        addPersonalBox.add(new Label("Telephone"), 0, 2);
-        addPersonalBox.add(persPhone, 1, 2);
-        addPersonalBox.setMargin(persPhone, new Insets(10, 0, 10, 50));
-        persPhone.setPrefHeight(40);
-        
-        addPersonalBox.add(new Label("Email"), 0, 3);
-        addPersonalBox.add(persEmail, 1, 3);
-        addPersonalBox.setMargin(persEmail, new Insets(10, 0, 10, 50));
-        persEmail.setPrefHeight(40);
-        
-        addPersonalBox.add(new Label("Specialite"), 0, 4);
-        addPersonalBox.add(persSpecialite, 1, 4);
-        addPersonalBox.setMargin(persSpecialite, new Insets(10, 0, 10, 50));
-        persSpecialite.setPrefHeight(40);
-        
-        addPersonalBox.getChildren().add(addProfButton);
-
+        // addPersonalBox.add(addProfButton, 0, 6);
 
         ScrollPane scrollPane = new ScrollPane(); // Scroll pane for the "Cahier de Texte".
         scrollPane.setContent(rightPanelBoxCenterTitledPane); // Sets the content of the scroll pane.
         scrollPane.setFitToWidth(true); // Ensures the content fits the width of the scroll pane.
         scrollPane.setPannable(true); // Allows panning within the scroll pane.
-
 
         GridPane actionGridPane = new GridPane();
         actionGridPane.setVgap(10);
@@ -234,150 +237,7 @@ public class ChefDepartementScene {
         actionGridPane.setStyle("-fx-border-color: black; -fx-border-width: 2px; -fx-border-radius: 5px; -fx-padding: 10px;");
 
 
-        // Adding data to the gridPane
-        // actionGridPane.add(dateValue, 2, 0);
-        // actionGridPane.add(courseValue, 2, 1);
-        // actionGridPane.add(teacherValue, 2, 2);
-        // actionGridPane.add(detailsValue, 2, 3);
-        LinkedList<Fiche> Fiches = new LinkedList<>();
 
-        Button rejectButton = new Button("Refuser");
-        Button validateButton = new Button("Valider");
-
-        // Styling buttons
-        validateButton.setStyle("-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-size: 14px; -fx-padding: 10px;");
-        rejectButton.setStyle("-fx-background-color: #F44336; -fx-text-fill: white; -fx-font-size: 14px; -fx-padding: 10px;");
-
-        // Adding buttons to the grid
-        actionGridPane.add(validateButton, 0, 4, 2, 1);
-        actionGridPane.add(rejectButton, 2, 4, 2, 1);
-
-        // Aligning buttons
-        GridPane.setHalignment(validateButton, HPos.CENTER);
-        GridPane.setHalignment(rejectButton, HPos.CENTER);
-
-        // Adding the gridPane to the rightPanelBoxCenter
-        // addPersonalBox.getChildren().add(actionGridPane);
-        String url = "jdbc:mysql://localhost:3306/cdt";
-        String user = "root";
-        String password = "";
-
-        // insertion Query
-        String ficheQuery = "SELECT * FROM fichecours f INNER JOIN cahierdetexte cdt ON f.`idCahierDeTexte` = cdt.idcahierdetexte INNER JOIN classe cl ON cdt.idClasse = cl.idClasse INNER JOIN responsable r ON cl.`idClasse` = r.`idClasse` WHERE r.`idPersonnel` =?";
-        String validFicheQuery = "SELECT * FROM fichecours f INNER JOIN cahierdetexte cdt ON f.`idCahierDeTexte` = cdt.idcahierdetexte INNER JOIN classe cl ON cdt.idClasse = cl.idClasse INNER JOIN responsable r ON cl.`idClasse` = r.`idClasse` WHERE r.`idPersonnel` =? AND isSigned = false";
-
-        try {
-            Connection connection = DriverManager.getConnection(url, user, password);
-            PreparedStatement statement = connection.prepareStatement(ficheQuery);
-            PreparedStatement statementValid = connection.prepareStatement(validFicheQuery);
-            statement.setInt(1, id);
-            statementValid.setInt(1, id);
-            ResultSet result = statement.executeQuery();
-
-            // System.out.println("Le cahier de texte" + this.classe);
-            int i = 0;
-            while (result.next()) {
-                GridPane rightPanelBoxCenterLeftGrid = new GridPane();
-                rightPanelBoxCenterLeftGrid.setVgap(1);
-                rightPanelBoxCenterLeftGrid.setHgap(1);
-                rightPanelBoxCenterLeftGrid.getStyleClass().add("right-panel-box-center-left-grid");
-                rightPanelBoxCenterLeftGrid.setAlignment(Pos.CENTER_LEFT);
-                rightPanelBoxCenterLeftGrid.setPrefWidth(50);
-
-                Label courseLabel = new Label(result.getString("f.details"));
-                courseLabel.setStyle("-fx-font-size: 14px;-fx-font-smoothing-type: lcd;-fx-text-fill: black; -fx-font-weight: bold;-fx-font-family: 'Poppins';");
-                LocalDate today = LocalDate.now();
-                LocalDate courseDate = today.plusDays(i);
-                String courseDateString = today.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-                Label courseDateLabel = new Label(courseDateString);
-                courseDateLabel.setStyle("-fx-font-size: 10px; -fx-font-smoothing-type: lcd;-fx-text-fill: black; -fx-font-family: 'Poppins';");
-
-                rightPanelBoxCenterLeftGrid.setConstraints(courseLabel, 0, 0, 3, 1);
-                rightPanelBoxCenterLeftGrid.getChildren().add(courseLabel);
-                rightPanelBoxCenterLeftGrid.add(courseDateLabel, 0, 1);
-                if (result.getBoolean("f.isSigned") == true) {
-                    Image validIcon = new Image(getClass().getResource("ressources/images/validate2.png").toExternalForm());
-                    ImageView validIconView = new ImageView(validIcon);
-                    validIconView.setFitWidth(20);
-                    validIconView.setFitHeight(20);
-                    rightPanelBoxCenterLeftGrid.add(validIconView, 1, 1);
-                    rightPanelBoxCenterLeftGrid.setMargin(validIconView, new Insets(0, 0, 0, 450));
-                } else {
-                    Image unvalidIcon = new Image(getClass().getResource("ressources/images/unValidate.png").toExternalForm());
-                    ImageView unvalidIconView = new ImageView(unvalidIcon);
-                    unvalidIconView.setFitWidth(20);
-                    unvalidIconView.setFitHeight(20);
-                    rightPanelBoxCenterLeftGrid.add(unvalidIconView, 1, 1);
-                    rightPanelBoxCenterLeftGrid.setMargin(unvalidIconView, new Insets(0, 0, 0, 450));
-                }
-                rightPanelBoxCenterLeft.getChildren().add(rightPanelBoxCenterLeftGrid);
-                rightPanelBoxCenterLeftGrid.setStyle(" -fx-padding: 20px; -fx-text-fill: black; -fx-font-size: 18px;");
-                i++;
-            }
-
-            ResultSet resultValid = statementValid.executeQuery();
-
-            i = 0;
-            // -- --------------------------------------------------------------------------------------------------------
-            while (resultValid.next()) {
-                GridPane addPersonalBoxGrid = new GridPane();
-                addPersonalBoxGrid.setVgap(1);
-                addPersonalBoxGrid.setHgap(1);
-                addPersonalBoxGrid.getStyleClass().add("right-panel-box-center-center-grid");
-                addPersonalBoxGrid.setAlignment(Pos.CENTER_LEFT);
-                addPersonalBoxGrid.setPrefWidth(50);
-
-                Label courseLabelValid = new Label(resultValid.getString("f.details"));
-                courseLabelValid.setStyle("-fx-font-size: 14px;-fx-font-smoothing-type: lcd;-fx-text-fill: black; -fx-font-weight: bold;-fx-font-family: 'Poppins';");
-                LocalDate today = LocalDate.now();
-                LocalDate courseDate = today.plusDays(i);
-                String courseDateString = today.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-                Label courseDateLabel = new Label(courseDateString);
-                courseDateLabel.setStyle("-fx-font-size: 10px; -fx-font-smoothing-type: lcd;-fx-text-fill: black; -fx-font-family: 'Poppins';");
-                Button verifyCourseDetailsButton = new Button("Verifier le contenu");
-                verifyCourseDetailsButton.setStyle("-fx-pref-width: 200px; -fx-font-size: 14px; -fx-background-color: #383A86; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 10px; -fx-border-radius: 5px; -fx-background-radius: 5px;");
-
-                addPersonalBoxGrid.setConstraints(courseLabelValid, 0, 0, 3, 1);
-                addPersonalBoxGrid.setConstraints(verifyCourseDetailsButton, 1, 0, 1, 2);
-                addPersonalBoxGrid.getChildren().add(courseLabelValid);
-                addPersonalBoxGrid.add(courseDateLabel, 0, 1);
-                addPersonalBoxGrid.getChildren().add(verifyCourseDetailsButton);
-                addPersonalBoxGrid.setMargin(verifyCourseDetailsButton, new Insets(0, 0, 0, 300));
-
-                addPersonalBox.getChildren().add(addPersonalBoxGrid);
-                addPersonalBoxGrid.setStyle(" -fx-padding: 20px; -fx-text-fill: black; -fx-font-size: 18px;");
-
-                verifyCourseDetailsButton.setOnAction(event -> {
-                    if (addPersonalBoxGrid.getChildren().contains(actionGridPane)) {
-                        addPersonalBoxGrid.getChildren().remove(actionGridPane);
-                        verifyCourseDetailsButton.setText("Verifier le contenu");
-                    } else {
-                        addPersonalBoxGrid.add(actionGridPane, 0, 2, 2, 1);
-                        verifyCourseDetailsButton.setText("Masquer le contenu");
-                    }
-                    // System.out.println("Vérification du contenu : " + courseLabelValid.getText());
-                });
-                Fiches.add(new Fiche(resultValid.getInt("f.idFiche"), resultValid.getBoolean("f.isSigned"), resultValid.getString("f.details"), resultValid.getInt("f.idCours"), resultValid.getInt("f.idCahierDeTexte")));
-
-                // Declaration of action's Buttons
-                // Button validateButton = new Button("Valider");
-                // validateButton.setOnAction(event -> {
-                //     Responsable responsable = new Responsable(new Personne(recupFirstName(id), recupLastName(id), recupEmail(id), recupPhoneNumber(id)), id, 0, null);
-                //     responsable.validateAddedCourse(Fiches.get(i).getIdFiche());
-
-                // });
-
-                // verifyCourseDetailsButton.setOnAction(event -> {
-                //     addPersonalBoxGrid.add(actionGridPane, 0, 2, 2, 1);
-                //     System.out.println("Vérification du contenu : " + courseLabelValid.getText());
-                // });
-                i++;
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("erreur");
-        }
 
         // Créer un ScrollPane et y placer le VBox
         VBox rightPanelBoxCenterRight = new VBox(20);
@@ -406,8 +266,8 @@ public class ChefDepartementScene {
         addPersonnelIconButton.setStyle("-fx-content-display: top; -fx-pref-width: 200px; -fx-font-size: 14px;");
 
         addPersonnelIconButton.setOnAction(event -> {
-            rightPanelBoxCenter.getChildren().add(scrollPane);
-            rightPanelBoxCenter.getChildren().remove(addPersonalBox);
+            rightPanelBoxCenter.getChildren().remove(scrollPane);
+            rightPanelBoxCenter.getChildren().add(addPersonalBox);
         });
 
         Button assignCourseButton = new Button("Assigner un Cours");
@@ -415,8 +275,8 @@ public class ChefDepartementScene {
         assignCourseButton.setStyle("-fx-content-display: top; -fx-pref-width: 200px; -fx-font-size: 14px;");
 
         assignCourseButton.setOnAction(event -> {
-            rightPanelBoxCenter.getChildren().remove(scrollPane);
-            rightPanelBoxCenter.getChildren().add(addPersonalBox);
+            rightPanelBoxCenter.getChildren().add(scrollPane);
+            rightPanelBoxCenter.getChildren().remove(addPersonalBox);
         });
 
         Button logOutButton = new Button("Se Deconnecter");
