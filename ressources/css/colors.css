@@ -1,0 +1,40 @@
+body{/* CSS HEX */
+ --woodsmoke: #111315;
+--jaffa: #  ;
+--cararra: #f5f5f1;
+--jumbo: #707071;
+--gunsmoke: #8f9291;
+--pumice: #c0c2c1;
+--new-orleans: #f1c796;
+--cloudy: #b4aba5;
+--minsk: #383a86;
+--spring-leaves: #5c896e;
+
+
+/* SCSS HEX */
+--woodsmoke: #111315;
+--jaffa: #e79540;
+--cararra: #f5f5f1;
+--jumbo: #707071;
+--gunsmoke: #8f9291;
+--pumice: #c0c2c1;
+--new-orleans: #f1c796;
+--cloudy: #b4aba5;
+--minsk: #383a86;
+--spring-leaves: #5c896e;
+
+
+/* SCSS RGB */
+--woodsmoke: rgba(17,19,21,1);
+--jaffa: rgba(231,149,64,1);
+--cararra: rgba(245,245,241,1);
+--jumbo: rgba(112,112,113,1);
+--gunsmoke: rgba(143,146,145,1);
+--pumice: rgba(192,194,193,1);
+--new-orleans: rgba(241,199,150,1);
+--cloudy: rgba(180,171,165,1);
+--minsk: rgba(56,58,134,1);
+--spring-leaves: rgba(92,137,110,1);
+
+
+}

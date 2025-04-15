@@ -1,7 +1,8 @@
+
+
 import controllers.Session;
 import static controllers.recupData.*;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.geometry.*;
@@ -20,11 +21,13 @@ public class EnseignantScene {
 
     private Scene scene;
 
+    @SuppressWarnings("CallToPrintStackTrace")
     public EnseignantScene(MainApp mainApp) {
         Session session = Session.getInstance();
         int id = session.getId();
         // int id = 24;
         String firstName = recupNames(id);
+        String specialite = recupSpecialite(id);
         System.out.println("Session ID: " + id + ", First Name: " + firstName);
         // chargement des images
         Image logoImage = new Image(getClass().getResource("ressources/images/uidt.jpeg").toExternalForm());
@@ -115,7 +118,7 @@ public class EnseignantScene {
         rightPanelBoxTop.setPadding(new Insets(20));
         rightPanelBoxTop.getStyleClass().add("right-panel-box-top");
         rightPanelBoxTop.setAlignment(Pos.CENTER);
-        rightPanelBoxTop.setPrefHeight(70);
+        // rightPanelBoxTop.setPrefHeight(70);
 
         // Titre en haut ---------------------------------------------------------------------
         Label titleLabel = new Label("Dashboard - Espace Enseignant");
@@ -139,9 +142,9 @@ public class EnseignantScene {
         rightPanelBoxMiddle.setPadding(new Insets(20));
         rightPanelBoxMiddle.getStyleClass().add("right-panel-box-middle");
         rightPanelBoxMiddle.setAlignment(Pos.CENTER_LEFT);
-        rightPanelBoxMiddle.setPrefHeight(100);
+        // rightPanelBoxMiddle.setPrefHeight(100);
 
-        Label classe = new Label("Classe: Licence 2 Informatique");
+        Label classe = new Label("Specialite : "+ specialite);
         classe.setStyle("-fx-font-size: 24px;-fx-font-smoothing-type: lcd;-fx-text-fill: #383A86; -fx-font-weight: bold;-fx-font-family: 'Poppins';");
 
         rightPanelBoxMiddle.getChildren().addAll(classe);
@@ -150,7 +153,7 @@ public class EnseignantScene {
         rightPanelBoxCenter.setPadding(new Insets(20));
         rightPanelBoxCenter.getStyleClass().add("right-panel-box-center");
         rightPanelBoxCenter.setAlignment(Pos.CENTER_LEFT);
-        rightPanelBoxCenter.setPrefHeight(400);
+        // rightPanelBoxCenter.setPrefHeight(400);
 
         TitledPane titledPane = new TitledPane();
         titledPane.setText("Activites Recentes");
@@ -223,6 +226,7 @@ public class EnseignantScene {
             // System.out.println(classeName + " " + intitule + " " + details);
             // Appel de la méthode pour ajouter le cours et les détails
             Enseignant e =new Enseignant(new Personne(recupFirstName(id), recupLastName(id), recupEmail(id), recupPhoneNumber(id)), id, recupSpecialite(id));
+            @SuppressWarnings("unused")
             Fiche f = e.addCoursDetails(classeName, intitule, details);
         });
 
@@ -233,8 +237,7 @@ public class EnseignantScene {
             statement.setInt(1, id);
             ResultSet result = statement.executeQuery();
 
-            // System.out.println("Le cahier de texte" + this.classe);
-            int i = 0;
+            // System.out.println("Le cahier de texte" + this.classe)
             while (result.next()) {
                 classeList.getItems().add(result.getString("cl.classeName"));
                 courseList.getItems().add(result.getString("c.intitule"));
@@ -327,7 +330,7 @@ public class EnseignantScene {
         rightPanelBoxBottom.setPadding(new Insets(20));
         rightPanelBoxBottom.getStyleClass().add("right-panel-box-bottom");
         rightPanelBoxBottom.setAlignment(Pos.CENTER);
-        rightPanelBoxBottom.setPrefHeight(90);
+        // rightPanelBoxBottom.setPrefHeight(90);
         rightPanelBoxBottom.getStyleClass().add("bottom-panel");
         rightPanelBoxBottom.setStyle("-fx-background-color: #2E2E2E; -fx-padding: 10px; -fx-alignment: center;");
         Label footerText = new Label("© 2025 Manage Your Classes - All rights reserved");
@@ -335,6 +338,12 @@ public class EnseignantScene {
         rightPanelBoxBottom.getChildren().addAll(footerText);
 
         rightPanelBox.getChildren().addAll(rightPanelBoxTop, rightPanelBoxMiddle, rightPanelBoxCenter, rightPanelBoxBottom);
+                rightPanelBoxTop.prefHeightProperty().bind(rightPanelBox.heightProperty().multiply(0.1));
+        rightPanelBoxMiddle.prefHeightProperty().bind(rightPanelBox.heightProperty().multiply(0.1));
+        rightPanelBoxCenter.prefHeightProperty().bind(rightPanelBox.heightProperty().multiply(0.7));
+        rightPanelBoxBottom.prefHeightProperty().bind(rightPanelBox.heightProperty().multiply(0.1));
+
+
 
         // Ajout du leftBorderPane au primaryPanel
         primaryPanel.getChildren().addAll(leftBorderPane, rightPanelBox);

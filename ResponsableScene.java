@@ -5,7 +5,6 @@ import models.*;
 
 // import static models.Fiche.*;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.geometry.*;
@@ -23,7 +22,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.LinkedList;
 // import static models.Responsable.validateAddedCourse;
 
-
 public class ResponsableScene {
 
     private Scene scene;
@@ -34,8 +32,9 @@ public class ResponsableScene {
         // int id = session.getId();
         // String firstName = recupNames(id);
         // System.out.println(id+' '+firstName);
-        Session session = Session.getInstance();
-        int id = session.getId();
+        // Session session = Session.getInstance();
+        // int id = session.getId();
+        int id =20;
         String firstName = recupNames(id);
         System.out.println("Session ID: " + id + ", First Name: " + firstName);
         // chargement des images
@@ -128,7 +127,7 @@ public class ResponsableScene {
         rightPanelBoxTop.setPadding(new Insets(20)); // Adds padding around the top section.
         rightPanelBoxTop.getStyleClass().add("right-panel-box-top"); // Adds a CSS style class for styling.
         rightPanelBoxTop.setAlignment(Pos.CENTER); // Centers the content horizontally.
-        rightPanelBoxTop.setPrefHeight(60); // Sets the preferred height of the top section.
+        // rightPanelBoxTop.setPrefHeight(60); // Sets the preferred height of the top section.
 
         // Title at the top of the right panel.
         Label titleLabel = new Label("Dashboard - Espace Responsable"); // Title text.
@@ -152,7 +151,7 @@ public class ResponsableScene {
         rightPanelBoxMiddle.setPadding(new Insets(20)); // Adds padding around the middle section.
         rightPanelBoxMiddle.getStyleClass().add("right-panel-box-middle"); // Adds a CSS style class for styling.
         rightPanelBoxMiddle.setAlignment(Pos.CENTER_LEFT); // Aligns the content to the left.
-        rightPanelBoxMiddle.setPrefHeight(40); // Sets the preferred height of the middle section.
+        // rightPanelBoxMiddle.setPrefHeight(40); // Sets the preferred height of the middle section.
 
         Label classe = new Label("Classe: Licence 2 Informatique"); // Displays the class information.
         classe.setStyle("-fx-font-size: 24px;-fx-font-smoothing-type: lcd;-fx-text-fill: #383A86; -fx-font-weight: bold;-fx-font-family: 'Poppins';"); // Styling for the class label.
@@ -163,12 +162,11 @@ public class ResponsableScene {
         rightPanelBoxCenter.setPadding(new Insets(2)); // Adds padding around the center section.
         rightPanelBoxCenter.getStyleClass().add("right-panel-box-center"); // Adds a CSS style class for styling.
         rightPanelBoxCenter.setAlignment(Pos.CENTER); // Centers the content horizontally.
-        rightPanelBoxCenter.setPrefHeight(450); // Sets the preferred height of the center section.
+        // rightPanelBoxCenter.setPrefHeight(450); // Sets the preferred height of the center section.
 
         TitledPane rightPanelBoxCenterTitledPane = new TitledPane(); // Titled pane for the "Cahier de Texte".
         rightPanelBoxCenterTitledPane.setText("Cahier de Texte"); // Sets the title text.
         rightPanelBoxCenterTitledPane.setStyle("-fx-font-size: 22px; -fx-font-weight: bold;"); // Styling for the titled pane.
-
         TitledPane rightPanelBoxCenterTitledPaneValid = new TitledPane(); // Titled pane for "Contenu ajouter par l'enseignant".
         rightPanelBoxCenterTitledPaneValid.setText("Contenu ajouter par l'enseignant"); // Sets the title text.
         rightPanelBoxCenterTitledPaneValid.setStyle("-fx-font-size: 22px; -fx-font-weight: bold;"); // Styling for the titled pane.
@@ -185,15 +183,24 @@ public class ResponsableScene {
         rightPanelBoxCenterCenter.setAlignment(Pos.CENTER); // Centers the content horizontally.
         rightPanelBoxCenterTitledPaneValid.setContent(rightPanelBoxCenterCenter); // Sets the content of the titled pane.
 
-        ScrollPane scrollPane = new ScrollPane(); // Scroll pane for the "Cahier de Texte".
-        scrollPane.setContent(rightPanelBoxCenterTitledPane); // Sets the content of the scroll pane.
-        scrollPane.setFitToWidth(true); // Ensures the content fits the width of the scroll pane.
-        scrollPane.setPannable(true); // Allows panning within the scroll pane.
+// Création du ScrollPane viewTextBookBox
+        ScrollPane viewTextBookBox = new ScrollPane();
+        viewTextBookBox.setFitToWidth(true); // Ajuste la largeur au contenu
+        viewTextBookBox.setPannable(true); // Permet le défilement
 
-        ScrollPane scrollPaneValid = new ScrollPane(); // Scroll pane for "Contenu ajouter par l'enseignant".
-        scrollPaneValid.setContent(rightPanelBoxCenterTitledPaneValid); // Sets the content of the scroll pane.
-        scrollPaneValid.setFitToWidth(true); // Ensures the content fits the width of the scroll pane.
-        scrollPaneValid.setPannable(true); // Allows panning within the scroll pane.
+        Label viewTextBookLabel = new Label("Cahier de Texte");
+        viewTextBookLabel.setStyle("-fx-font-size: 22px; -fx-font-weight: bold; -fx-padding: 10px;");
+
+// Création d'un VBox pour contenir le label et le contenu
+        VBox viewTextBookContent = new VBox(10); // Espacement vertical de 10
+        viewTextBookContent.setPadding(new Insets(10)); // Ajout de marges internes
+        viewTextBookContent.getChildren().addAll(viewTextBookLabel, rightPanelBoxCenterTitledPane.getContent()); // Ajout du label et du contenu
+        viewTextBookBox.setContent(viewTextBookContent); // Ajout du VBox au ScrollPane
+
+        ScrollPane validCourseBox = new ScrollPane(); // Scroll pane for "Contenu ajouter par l'enseignant".
+        validCourseBox.setContent(rightPanelBoxCenterTitledPaneValid); // Sets the content of the scroll pane.
+        validCourseBox.setFitToWidth(true); // Ensures the content fits the width of the scroll pane.
+        validCourseBox.setPannable(true); // Allows panning within the scroll pane.
 
         GridPane actionGridPane = new GridPane();
         actionGridPane.setVgap(10);
@@ -361,9 +368,7 @@ public class ResponsableScene {
                 // validateButton.setOnAction(event -> {
                 //     Responsable responsable = new Responsable(new Personne(recupFirstName(id), recupLastName(id), recupEmail(id), recupPhoneNumber(id)), id, 0, null);
                 //     responsable.validateAddedCourse(Fiches.get(i).getIdFiche());
-
                 // });
-
                 // verifyCourseDetailsButton.setOnAction(event -> {
                 //     rightPanelBoxCenterCenterGrid.add(actionGridPane, 0, 2, 2, 1);
                 //     System.out.println("Vérification du contenu : " + courseLabelValid.getText());
@@ -402,9 +407,10 @@ public class ResponsableScene {
         viewTextBookButton.setGraphic(viewTextBookIconView);
         viewTextBookButton.setStyle("-fx-content-display: top; -fx-pref-width: 200px; -fx-font-size: 14px;");
 
+// Remplacement de l'utilisation de viewTextBookBox
         viewTextBookButton.setOnAction(event -> {
-            rightPanelBoxCenter.getChildren().add(scrollPane);
-            rightPanelBoxCenter.getChildren().remove(scrollPaneValid);
+            rightPanelBoxCenter.getChildren().add(viewTextBookBox);
+            rightPanelBoxCenter.getChildren().remove(validCourseBox);
         });
 
         Button validateContentButton = new Button("Valider un contenu");
@@ -412,8 +418,8 @@ public class ResponsableScene {
         validateContentButton.setStyle("-fx-content-display: top; -fx-pref-width: 200px; -fx-font-size: 14px;");
 
         validateContentButton.setOnAction(event -> {
-            rightPanelBoxCenter.getChildren().remove(scrollPane);
-            rightPanelBoxCenter.getChildren().add(scrollPaneValid);
+            rightPanelBoxCenter.getChildren().remove(viewTextBookBox);
+            rightPanelBoxCenter.getChildren().add(validCourseBox);
         });
 
         Button logOutButton = new Button("Se Deconnecter");
@@ -430,7 +436,7 @@ public class ResponsableScene {
 
         rightPanelBoxCenter.getChildren().addAll(rightPanelBoxCenterRight);
         rightPanelBoxCenter.setAlignment(Pos.CENTER_LEFT);
-        scrollPane.prefWidthProperty().bind(rightPanelBoxCenter.widthProperty().multiply(0.6));
+        viewTextBookBox.prefWidthProperty().bind(rightPanelBoxCenter.widthProperty().multiply(0.6));
         rightPanelBoxCenterCenter.prefWidthProperty().bind(rightPanelBoxCenter.widthProperty().multiply(0.6));
         rightPanelBoxCenterRight.prefWidthProperty().bind(rightPanelBoxCenter.widthProperty().multiply(0.3));
 
@@ -438,7 +444,7 @@ public class ResponsableScene {
         rightPanelBoxBottom.setPadding(new Insets(20));
         rightPanelBoxBottom.getStyleClass().add("right-panel-box-bottom");
         rightPanelBoxBottom.setAlignment(Pos.CENTER);
-        rightPanelBoxBottom.setPrefHeight(70);
+        // rightPanelBoxBottom.setPrefHeight(70);
         rightPanelBoxBottom.getStyleClass().add("bottom-panel");
         rightPanelBoxBottom.setStyle("-fx-background-color: #2E2E2E; -fx-padding: 10px; -fx-alignment: center;");
         Label footerText = new Label("© 2025 Manage Your Classes - All rights reserved");
@@ -446,6 +452,10 @@ public class ResponsableScene {
         rightPanelBoxBottom.getChildren().addAll(footerText);
 
         rightPanelBox.getChildren().addAll(rightPanelBoxTop, rightPanelBoxMiddle, rightPanelBoxCenter, rightPanelBoxBottom);
+        rightPanelBoxTop.prefHeightProperty().bind(rightPanelBox.heightProperty().multiply(0.1));
+        rightPanelBoxMiddle.prefHeightProperty().bind(rightPanelBox.heightProperty().multiply(0.1));
+        rightPanelBoxCenter.prefHeightProperty().bind(rightPanelBox.heightProperty().multiply(0.7));
+        rightPanelBoxBottom.prefHeightProperty().bind(rightPanelBox.heightProperty().multiply(0.1));
 
         // Ajout du leftBorderPane au primaryPanel
         primaryPanel.getChildren().addAll(leftBorderPane, rightPanelBox);

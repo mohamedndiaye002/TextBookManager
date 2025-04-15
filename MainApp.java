@@ -1,4 +1,3 @@
-
 import java.sql.SQLException;
 import java.util.Objects;
 
@@ -17,7 +16,7 @@ public class MainApp extends Application {
         this.stage = stage; // Stocker l'objet Stage
 
         // Charger la scène de connexion au démarrage
-        EnseignantScene loginScene = new EnseignantScene(this);
+        ResponsableScene loginScene = new ResponsableScene(this);
         loginScene.getScene().getStylesheets().add(Objects.requireNonNull(getClass().getResource("ressources/css/style.css")).toExternalForm());
         stage.setScene(loginScene.getScene());
         stage.setTitle("Manage Your Classes");
