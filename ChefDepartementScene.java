@@ -134,6 +134,8 @@ public class ChefDepartementScene {
         titleLabel.setFont(Font.loadFont("ressources/fonts/Poppins-Black.ttf", 30)); // Loads a custom font for the title.
         titleLabel.getStyleClass().add("title-label"); // Adds a CSS style class for styling.
 
+
+
         HBox accountBox = new HBox(20); // Container for the account information.
         accountBox.setPadding(new Insets(0, 20, 0, 20)); // Adds padding around the account box.
         Label accountLabel = new Label(firstName); // Displays the user's first name.
@@ -163,15 +165,6 @@ public class ChefDepartementScene {
         rightPanelBoxCenter.setAlignment(Pos.CENTER); // Centers the content horizontally.
         rightPanelBoxCenter.setPrefHeight(450); // Sets the preferred height of the center section.
 
-        TitledPane rightPanelBoxCenterTitledPane = new TitledPane(); // Titled pane for the "Cahier de Texte".
-        rightPanelBoxCenterTitledPane.setText("Cahier de Texte"); // Sets the title text.
-        rightPanelBoxCenterTitledPane.setStyle("-fx-font-size: 22px; -fx-font-weight: bold;"); // Styling for the titled pane.
-
-        VBox rightPanelBoxCenterLeft = new VBox(20); // Left section of the center panel.
-        rightPanelBoxCenterLeft.setPadding(new Insets(20)); // Adds padding around the left section.
-        rightPanelBoxCenterLeft.getStyleClass().add("right-panel-box-center-left"); // Adds a CSS style class for styling.
-        rightPanelBoxCenterLeft.setAlignment(Pos.CENTER); // Centers the content horizontally.
-        rightPanelBoxCenterTitledPane.setContent(rightPanelBoxCenterLeft); // Sets the content of the titled pane.
 
         VBox addPersonalBox = new VBox(); // Center section of the center panel.
         addPersonalBox.setPadding(new Insets(20)); // Adds padding around the center section.
@@ -179,55 +172,25 @@ public class ChefDepartementScene {
         // addPersonalBox.setAlignment(Pos.Left); // Centers the content horizontally.
         // addPersonalBox.setStyle("-fx-border-witdh: 1px; -fx-border-color: blue; -fx-border-style: solid");
 
+
+        // Add personal Box
         HBox addPersonalBoxHead = new HBox();
-        addPersonalBox.setPadding(new Insets(20)); // Adds padding around the center section.
+        addPersonalBoxHead.setPadding(new Insets(20)); // Adds padding around the center section.
         addPersonalBoxHead.setPrefHeight(50);
         addPersonalBoxHead.setStyle("-fx-background-color: gray;");
-
-        
-        // le champ du prenom
+            // les champs
         TextField persFirstName = new TextField();
         TextField persLastName = new TextField();
         TextField persPhone = new TextField();
         TextField persEmail = new TextField();
         TextField persSpecialite = new TextField();
         Button addProfButton = new Button("Ajouter Professeur");
-        
         addPersonalBox.getChildren().addAll(addPersonalBoxHead, new Label("Prenom"), persFirstName, new Label("Nom"), persLastName, new Label("Telephone"), persPhone, new Label("Email"), persEmail, new Label("Specialite"), persSpecialite, addProfButton);
-        // addPersonalBox.setConstraints(addPersonalBoxHead, 0, 0, 2, 1);
-        // addPersonalBox.getChildren().add(addPersonalBoxHead);
-        
         addPersonalBox.setMargin(persFirstName, new Insets(0, 0, 20, 0));
-        // addPersonalBox.add(new Label("Prenom"), 0, 1);
-        // addPersonalBox.add(persFirstName, 1, 1);
-        // // persFirstName.setPrefHeight(40);
-        
         addPersonalBox.setMargin(persLastName, new Insets(0, 0, 20, 0));
-        // addPersonalBox.add(new Label("Nom"), 0, 2);
-        // addPersonalBox.add(persLastName, 1, 2);
-        // // persLastName.setPrefHeight(40);
-        
         addPersonalBox.setMargin(persPhone, new Insets(0, 0, 20, 0));
-        // addPersonalBox.add(new Label("Telephone"), 0, 3);
-        // addPersonalBox.add(persPhone, 1, 3);
-        // // persPhone.setPrefHeight(40);
-        
         addPersonalBox.setMargin(persEmail, new Insets(0, 0, 20, 0));
-        // addPersonalBox.add(new Label("Email"), 0, 4);
-        // addPersonalBox.add(persEmail, 1, 4);
-        // // persEmail.setPrefHeight(40);
-        
         addPersonalBox.setMargin(persSpecialite, new Insets(0, 0, 20, 0));
-        // addPersonalBox.add(new Label("Specialite"), 0, 5);
-        // addPersonalBox.add(persSpecialite, 1, 5);
-        // // persSpecialite.setPrefHeight(40);
-
-        // addPersonalBox.add(addProfButton, 0, 6);
-
-        ScrollPane scrollPane = new ScrollPane(); // Scroll pane for the "Cahier de Texte".
-        scrollPane.setContent(rightPanelBoxCenterTitledPane); // Sets the content of the scroll pane.
-        scrollPane.setFitToWidth(true); // Ensures the content fits the width of the scroll pane.
-        scrollPane.setPannable(true); // Allows panning within the scroll pane.
 
         GridPane actionGridPane = new GridPane();
         actionGridPane.setVgap(10);
@@ -235,6 +198,90 @@ public class ChefDepartementScene {
         actionGridPane.setPadding(new Insets(20));
         actionGridPane.setAlignment(Pos.CENTER);
         actionGridPane.setStyle("-fx-border-color: black; -fx-border-width: 2px; -fx-border-radius: 5px; -fx-padding: 10px;");
+
+        // Show personal Box
+
+        
+        VBox showPersonalBox = new VBox(); // Center section of the center panel.
+        showPersonalBox.setPadding(new Insets(20)); // Adds padding around the center section.
+        showPersonalBox.getStyleClass().add("right-panel-box-center-center"); // Adds a CSS style class for styling.
+
+        // Head of the list
+        GridPane showPersonalBoxHead = new GridPane();
+        showPersonalBoxHead.setPadding(new Insets(20)); // Adds padding around the center section.
+        showPersonalBoxHead.setPrefHeight(50);
+        showPersonalBoxHead.setStyle("-fx-background-color: gray;");
+
+        VBox showPersonalContent = new VBox();
+
+        ScrollPane showPersonalContentScroll = new ScrollPane(); // Scroll pane for the "Cahier de Texte".
+        showPersonalContentScroll.setContent(showPersonalContent); // Sets the content of the scroll pane.
+        showPersonalContentScroll.setFitToWidth(true); // Ensures the content fits the width of the scroll pane.
+        showPersonalContentScroll.setPannable(true); // Allows panning within the scroll pane.
+
+
+        showPersonalBoxHead.add(new Label("Prenom"), 0, 0);
+        showPersonalBoxHead.add(new Label("Nom"), 1, 0);
+        showPersonalBoxHead.add(new Label("Telephone"), 2, 0);
+        showPersonalBoxHead.add(new Label("Email"), 3, 0);  
+        showPersonalBoxHead.add(new Label("NCE"), 4, 0);  
+        showPersonalBoxHead.add(new Label("Classe"), 5, 0);
+
+
+        String url = "jdbc:mysql://localhost:3306/cdt";
+        String user = "root";
+        String password = "";
+
+        // insertion Query
+        String showRespQuery = "SELECT * FROM personnel p INNER JOIN responsable r ON p.idPersonnel = r.idPersonnel INNER JOIN classe c ON c.idClasse = r.idClasse";
+        // String showProfQuery = "SELECT * FROM fichecours f INNER JOIN cahierdetexte cdt ON f.`idCahierDeTexte` = cdt.idcahierdetexte INNER JOIN classe cl ON cdt.idClasse = cl.idClasse INNER JOIN responsable r ON cl.`idClasse` = r.`idClasse` WHERE r.`idPersonnel` =? AND isSigned = false";
+
+        try {
+            Connection connection = DriverManager.getConnection(url, user, password);
+            PreparedStatement statementResp = connection.prepareStatement(showRespQuery);
+            // statementResp.setInt(1, id);
+            ResultSet result = statementResp.executeQuery();
+
+            // System.out.println("Le cahier de texte" + this.classe);
+            while (result.next()) {
+                GridPane listOfStudent = new GridPane();
+                listOfStudent.setVgap(1);
+                listOfStudent.setHgap(1);
+                listOfStudent.getStyleClass().add("right-panel-box-center-left-grid");
+                listOfStudent.setAlignment(Pos.CENTER_LEFT);
+                listOfStudent.setPrefWidth(50);
+
+                Label prenomLabel = new Label(result.getString("p.firstName"));
+                prenomLabel.setStyle("-fx-font-size: 14px;-fx-font-smoothing-type: lcd;-fx-text-fill: black; -fx-font-weight: bold;-fx-font-family: 'Poppins';");
+                Label nomLabel = new Label(result.getString("p.lastName"));
+                nomLabel.setStyle("-fx-font-size: 14px;-fx-font-smoothing-type: lcd;-fx-text-fill: black; -fx-font-weight: bold;-fx-font-family: 'Poppins';");
+                Label emailLabel = new Label(result.getString("p.telephone"));
+                emailLabel.setStyle("-fx-font-size: 14px;-fx-font-smoothing-type: lcd;-fx-text-fill: black; -fx-font-weight: bold;-fx-font-family: 'Poppins';");
+                Label telephoneLabel = new Label(result.getString("p.email"));
+                telephoneLabel.setStyle("-fx-font-size: 14px;-fx-font-smoothing-type: lcd;-fx-text-fill: black; -fx-font-weight: bold;-fx-font-family: 'Poppins';");
+                Label classeLabel = new Label(result.getString("r.classe"));
+                classeLabel.setStyle("-fx-font-size: 14px;-fx-font-smoothing-type: lcd;-fx-text-fill: black; -fx-font-weight: bold;-fx-font-family: 'Poppins';");
+
+
+                listOfStudent.add(prenomLabel, 0, 0);
+                listOfStudent.add(nomLabel, 1, 0);
+                listOfStudent.add(emailLabel, 2, 0);
+                listOfStudent.add(telephoneLabel, 3, 0);
+                listOfStudent.add(classeLabel, 4, 0);
+                showPersonalContent.getChildren().add(listOfStudent);
+                listOfStudent.setStyle(" -fx-padding: 20px; -fx-text-fill: black; -fx-font-size: 18px;");
+                System.out.println(result.getString("p.firstName"));
+
+            }
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("erreur");
+        }
+
+        // Ajoyt des composant
+        showPersonalBox.getChildren().addAll(showPersonalBoxHead, showPersonalContentScroll);
 
 
 
@@ -255,19 +302,25 @@ public class ChefDepartementScene {
         ImageView assignCourseIconView = new ImageView(assignCourseIcon);
         assignCourseIconView.setFitWidth(30);
         assignCourseIconView.setFitHeight(30);
+        
+        Image showStudentIcon = new Image(getClass().getResource("ressources/images/visitBook.png").toExternalForm());
+        ImageView showStudentIconView = new ImageView(showStudentIcon);
+        showStudentIconView.setFitWidth(30);
+        showStudentIconView.setFitHeight(30);
+
 
         Image logOutIcon = new Image(getClass().getResource("ressources/images/logOut2.png").toExternalForm());
         ImageView logOutIconView = new ImageView(logOutIcon);
         logOutIconView.setFitWidth(30);
         logOutIconView.setFitHeight(30);
 
-        Button addPersonnelIconButton = new Button("Ajouter Responable/Professeur");
-        addPersonnelIconButton.setGraphic(addPersonnelIconView);
-        addPersonnelIconButton.setStyle("-fx-content-display: top; -fx-pref-width: 200px; -fx-font-size: 14px;");
+        Button addPersonneButton = new Button("Ajouter Responsable / Professeur");
+        addPersonneButton.setGraphic(addPersonnelIconView);
+        addPersonneButton.setStyle("-fx-content-display: top; -fx-pref-width: 200px; -fx-font-size: 14px;");
 
-        addPersonnelIconButton.setOnAction(event -> {
-            rightPanelBoxCenter.getChildren().remove(scrollPane);
+        addPersonneButton.setOnAction(event -> {
             rightPanelBoxCenter.getChildren().add(addPersonalBox);
+            rightPanelBoxCenter.getChildren().remove(showPersonalBox);
         });
 
         Button assignCourseButton = new Button("Assigner un Cours");
@@ -275,8 +328,16 @@ public class ChefDepartementScene {
         assignCourseButton.setStyle("-fx-content-display: top; -fx-pref-width: 200px; -fx-font-size: 14px;");
 
         assignCourseButton.setOnAction(event -> {
-            rightPanelBoxCenter.getChildren().add(scrollPane);
             rightPanelBoxCenter.getChildren().remove(addPersonalBox);
+        });
+
+        Button showStudentButton = new Button("Afficher les Etudiants");
+        showStudentButton.setGraphic(showStudentIconView);
+        showStudentButton.setStyle("-fx-content-display: top; -fx-pref-width: 200px; -fx-font-size: 14px;");
+        showStudentButton.setOnAction(event -> {
+            rightPanelBoxCenter.getChildren().remove(addPersonalBox);
+            rightPanelBoxCenter.getChildren().add(showPersonalBox);
+
         });
 
         Button logOutButton = new Button("Se Deconnecter");
@@ -289,12 +350,12 @@ public class ChefDepartementScene {
             mainApp.changeScene(loginScene.getScene());
         });
 
-        rightPanelBoxCenterRight.getChildren().addAll(addPersonnelIconButton, assignCourseButton, logOutButton);
+        rightPanelBoxCenterRight.getChildren().addAll(showStudentButton, addPersonneButton, assignCourseButton, logOutButton);
 
-        rightPanelBoxCenter.getChildren().addAll(rightPanelBoxCenterRight);
+        rightPanelBoxCenter.getChildren().addAll(rightPanelBoxCenterRight, showPersonalBox);
         rightPanelBoxCenter.setAlignment(Pos.CENTER_LEFT);
-        scrollPane.prefWidthProperty().bind(rightPanelBoxCenter.widthProperty().multiply(0.6));
         addPersonalBox.prefWidthProperty().bind(rightPanelBoxCenter.widthProperty().multiply(0.6));
+        showPersonalBox.prefWidthProperty().bind(rightPanelBoxCenter.widthProperty().multiply(0.7));
         rightPanelBoxCenterRight.prefWidthProperty().bind(rightPanelBoxCenter.widthProperty().multiply(0.3));
 
         HBox rightPanelBoxBottom = new HBox();
@@ -309,19 +370,16 @@ public class ChefDepartementScene {
         rightPanelBoxBottom.getChildren().addAll(footerText);
 
         rightPanelBox.getChildren().addAll(rightPanelBoxTop, rightPanelBoxMiddle, rightPanelBoxCenter, rightPanelBoxBottom);
+        rightPanelBoxTop.prefHeightProperty().bind(rightPanelBox.heightProperty().multiply(0.1));
+        rightPanelBoxMiddle.prefHeightProperty().bind(rightPanelBox.heightProperty().multiply(0.1));
+        rightPanelBoxCenter.prefHeightProperty().bind(rightPanelBox.heightProperty().multiply(0.7));
+        rightPanelBoxBottom.prefHeightProperty().bind(rightPanelBox.heightProperty().multiply(0.1));
 
         // Ajout du leftBorderPane au primaryPanel
         primaryPanel.getChildren().addAll(leftBorderPane, rightPanelBox);
         leftBorderPane.prefWidthProperty().bind(primaryPanel.widthProperty().multiply(0.15));
         rightPanelBox.prefWidthProperty().bind(primaryPanel.widthProperty().multiply(0.85));
 
-        // Button backButton = new Button("Retour au tableau de bord");
-        // backButton.setOnAction(event -> {
-        //     DashboardScene dashboardScene = new DashboardScene(mainApp);
-        //     mainApp.changeScene(dashboardScene.getScene());
-        // });
-        // VBox vbox = new VBox(10, primaryPanel);
-        // vbox.setAlignment(Pos.CENTER);
         this.scene = new Scene(primaryPanel);
     }
 

@@ -184,12 +184,14 @@
 
 .right-panel-box {
     /* -fx-pref-width: 1300px; */
-    -fx-background-color: white;
+    -fx-background-color: rgb(235, 235, 235);
     -fx-border-radius: 10px 0 0 0;
     -fx-background-radius: 10px 0 0 0;
     -fx-border-color: #383A86;
     -fx-border-width: 1px;
     -fx-border-style: solid;
+
+
 }
 
 .right-panel-box-top {
@@ -213,11 +215,14 @@
 
 .right-panel-box-center {
     /* -fx-background-color: white; */
-    /* -fx-border-radius: 10px;
-    -fx-background-radius: 10px;*/
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
     /* -fx-border-color: #383A86;
     -fx-border-width: 1px;
     -fx-border-style: solid;  */
+    -fx-background-color: white;
+    -fx-effect: dropshadow(gaussian, gray, 10, 0.5, 0, 0);
+    -fx-padding: 20;
 }
 
 .right-panel-box-center-center {

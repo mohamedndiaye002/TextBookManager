@@ -8,6 +8,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.Scanner;
+
+import javafx.geometry.Pos;
+import javafx.scene.layout.GridPane;
 import models.ChefDepartement;
 import models.Enseignant;
 import models.Personne;
@@ -134,7 +137,30 @@ public class Main {
         // else
         // System.out.println("Connexion non reussie");
 
-        System.out.println("Le personnel avec l'id 1 est : " +recupSpecialite(21));
+        // System.out.println("Le personnel avec l'id 1 est : " +recupSpecialite(21));
+
+
+        // insertion Query
+        String showRespQuery = "SELECT * FROM personnel p INNER JOIN responsable r ON p.idPersonnel = r.idPersonnel INNER JOIN classe c ON c.idClasse = r.idClasse";
+        // String showProfQuery = "SELECT * FROM fichecours f INNER JOIN cahierdetexte cdt ON f.`idCahierDeTexte` = cdt.idcahierdetexte INNER JOIN classe cl ON cdt.idClasse = cl.idClasse INNER JOIN responsable r ON cl.`idClasse` = r.`idClasse` WHERE r.`idPersonnel` =? AND isSigned = false";
+
+        try {
+            Connection connection = DriverManager.getConnection(url, user, password);
+            PreparedStatement statementResp = connection.prepareStatement(showRespQuery);
+            // statementResp.setInt(1, id);
+            ResultSet result = statementResp.executeQuery();
+
+            // System.out.println("Le cahier de texte" + this.classe);
+            while (result.next()) {
+                System.out.println(result.getString("p.firstName"));
+
+            }
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("erreur");
+        }
 
     }
 }
