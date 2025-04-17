@@ -250,7 +250,7 @@ DESCRIBE Etudiant;
 -- Insert data into Etudiant
 -- -----------------------------------------------------
 INSERT INTO
-    Etudiant (idPersonnel, NCE, classe)
+    responsable (idPersonnel, NCE, classe)
 VALUES (1, 100, 'LI2'),
     (2, 101, 'LI2'),
     (3, 102, 'LI2'),

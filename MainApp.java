@@ -20,7 +20,7 @@ public class MainApp extends Application {
         loginScene.getScene().getStylesheets().add(Objects.requireNonNull(getClass().getResource("ressources/css/style.css")).toExternalForm());
         stage.setScene(loginScene.getScene());
         stage.setTitle("Manage Your Classes");
-        stage.setResizable(false);
+        // stage.setResizable(false);
         stage.setWidth(700);
         stage.setHeight(600);
         stage.setMaximized(true);

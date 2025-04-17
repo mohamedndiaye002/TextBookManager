@@ -268,3 +268,6 @@ SELECT DISTINCT cl.classeName, c.intitule FROM enseignant e INNER JOIN cours c O
 
 
 SELECT * FROM personnel p INNER JOIN responsable r ON p.idPersonnel = r.idPersonnel INNER JOIN classe c ON c.idClasse = r.idClasse;
+
+SELECT DISTINCT * FROM enseignant e INNER JOIN cours c ON e.idPersonnel = c.idPersonnel INNER JOIN fichecours f ON c.idCours = f.idCours INNER JOIN cahierdetexte cdt ON f.idCahierDeTexte = cdt.idCahierDeTexte INNER JOIN classe cl ON cdt.idClasse = cl.idClasse WHERE e.idPersonnel = 21 ORDER BY cl.classeName ASC;
+
