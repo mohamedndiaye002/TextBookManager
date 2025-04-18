@@ -334,16 +334,13 @@ public class ChefDepartementScene {
         assignCourseBoxTitle.setStyle("-fx-text-fill: white; -fx-font-size: 15px; -fx-font-weight: bold;");
 
         assignCourseBoxHead.getChildren().add(assignCourseBoxTitle);
-        // assignCourseBox.getChildren().add(assignCourseBoxHead);
+         assignCourseBox.getChildren().add(assignCourseBoxHead);
 
 
         String allClasses = "SELECT DISTINCT cl.classeName, c.intitule FROM enseignant e INNER JOIN cours c ON e.idPersonnel = c.idPersonnel INNER JOIN fichecours f ON c.idCours = f.idCours INNER JOIN cahierdetexte cdt ON f.idCahierDeTexte = cdt.idCahierDeTexte INNER JOIN classe cl ON cdt.idClasse = cl.idClasse WHERE e.idPersonnel = 21 ORDER BY cl.classeName ASC;";
 
         ChoiceBox<String> classeList = new ChoiceBox<>();
         ChoiceBox<String> courseList = new ChoiceBox<>();
-        TextArea detailsArea = new TextArea();
-        detailsArea.setPromptText("Ajouter les details du cours ici...");
-        detailsArea.setStyle("-fx-font-size: 14px; -fx-pref-width: 200px; -fx-padding: 0px; -fx-text-fill: black;");
         Button addDetailsButton = new Button("Ajouter");
         addDetailsButton.setStyle("-fx-font-size: 14px; -fx-pref-width: 150px; -fx-text-fill: black;");
 
@@ -364,7 +361,7 @@ public class ChefDepartementScene {
             courseList.setStyle("-fx-font-size: 14px; -fx-pref-width: 200px; -fx-padding: 10px; -fx-background-color: #383A86; -fx-text-fill: white;");
             courseList.setValue("Sélectionnez un cours"); // Valeur par défaut
 
-            assignCourseBox.getChildren().addAll(assignCourseBoxHead, classeList, courseList, addDetailsButton);
+            assignCourseBox.getChildren().addAll(classeList, courseList);
             classeList.setStyle("-fx-font-size: 14px; -fx-pref-width: 200px; -fx-padding: 10px; -fx-text-fill: black;");
             courseList.setStyle("-fx-font-size: 14px; -fx-pref-width: 200px; -fx-padding: 10px; -fx-text-fill: black;");
         } catch (Exception e) {
@@ -372,7 +369,7 @@ public class ChefDepartementScene {
             System.out.println("erreur");
         }
 
-
+        assignCourseBox.getChildren().addAll(addDetailsButton);
         // assignCourseBox.prefHeightProperty().bind(assignCourseBoxHead.heightProperty().multiply(0.1));
         assignCourseBoxHead.setPrefHeight(50);
 
@@ -403,9 +400,8 @@ public class ChefDepartementScene {
         logOutIconView.setFitWidth(30);
         logOutIconView.setFitHeight(30);
 
-        Button addPersonneButton = new Button("Ajouter \nResponsable / Professeur");
+        Button addPersonneButton = new Button("Ajouter un personnel");
         addPersonneButton.setGraphic(addPersonnelIconView);
-        addPersonneButton.setAlignment(Pos.CENTER);
         addPersonneButton.setStyle("-fx-content-display: top; -fx-pref-width: 200px; -fx-font-size: 14px;");
 
         addPersonneButton.setOnAction(event -> {
