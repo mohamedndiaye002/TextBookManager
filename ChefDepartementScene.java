@@ -129,7 +129,7 @@ public class ChefDepartementScene {
 
         // Title at the top of the right panel.
         Label titleLabel = new Label("Dashboard - Espace Chef De Departement"); // Title text.
-        titleLabel.setStyle("-fx-font-size: 24px;-fx-font-smoothing-type: lcd;-fx-text-fill: #383A86; -fx-font-family: 'Century Gothic';"); // Styling for the title.
+        titleLabel.setStyle("-fx-font-size: 24px;-fx-font-smoothing-type: lcd;-fx-text-fill: #383A86; -fx-font-family: poppins;"); // Styling for the title.
         titleLabel.setFont(Font.loadFont("ressources/fonts/Poppins-Black.ttf", 30)); // Loads a custom font for the title.
         titleLabel.getStyleClass().add("title-label"); // Adds a CSS style class for styling.
 
@@ -321,17 +321,17 @@ public class ChefDepartementScene {
         showPersonalBox.getChildren().addAll(showPersonalBoxHead, showPersonalContentScroll);
 
         // Asssign Course To a Teacher Box
-        VBox assignCourseBox = new VBox();
+        VBox assignCourseBox = new VBox(60);
         assignCourseBox.setAlignment(Pos.TOP_CENTER);
-        assignCourseBox.setStyle("-fx-border-color: blue; -fx-border-style: solid; -fx-border-width: 2px; -fx-border-radius: 10px");
+        // assignCourseBox.setStyle("-fx-border-color: blue; -fx-border-style: solid; -fx-border-width: 2px; -fx-border-radius: 10px");
 
         // assign course box head
         HBox assignCourseBoxHead = new HBox();
         assignCourseBoxHead.setAlignment(Pos.CENTER);
-        assignCourseBox.setStyle("-fx-background-color: gray;");
+        assignCourseBoxHead.setStyle("-fx-background-color: gray; -fx-background-radius: 10px 10px 0 0;");
 
         Label assignCourseBoxTitle = new Label("Assign a new course to a teacher");
-        assignCourseBoxTitle.setStyle("-fx-text-fill: white; -fx-font-size: 15px; -fx-font-weight: bold;");
+        assignCourseBoxTitle.setStyle("-fx-text-fill: white; -fx-font-size: 15px; -fx-font-weight: bold; -fx-font-family: poppins");
 
         assignCourseBoxHead.getChildren().add(assignCourseBoxTitle);
         // assignCourseBox.getChildren().add(assignCourseBoxHead);
@@ -403,9 +403,8 @@ public class ChefDepartementScene {
         logOutIconView.setFitWidth(30);
         logOutIconView.setFitHeight(30);
 
-        Button addPersonneButton = new Button("Ajouter \nResponsable / Professeur");
+        Button addPersonneButton = new Button("Ajouter Personnel");
         addPersonneButton.setGraphic(addPersonnelIconView);
-        addPersonneButton.setAlignment(Pos.CENTER);
         addPersonneButton.setStyle("-fx-content-display: top; -fx-pref-width: 200px; -fx-font-size: 14px;");
 
         addPersonneButton.setOnAction(event -> {

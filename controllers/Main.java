@@ -104,7 +104,7 @@ public class Main {
                 personnelEnseignants.add(new Enseignant(new Personne(rs1.getString("p.firstName"), rs1.getString("p.lastName"), rs1.getString("p.email"), rs1.getString("p.telephone")), rs1.getInt("p.idPersonnel"), rs1.getString("e.specialite")));
             }
             while(rs2.next()){
-                personnelResponsables.add(new Responsable(new Personne(rs2.getString("p.firstName"), rs2.getString("p.lastName"), rs2.getString("p.email"), rs2.getString("p.telephone")), rs2.getInt("p.idPersonnel"), rs2.getLong("r.NCE"), rs2.getString("cl.classeName")));
+                personnelResponsables.add(new Responsable());
             }
             while(rs3.next()){
                 personnelChefDepartements.add(new ChefDepartement(new Personne(rs3.getString("p.firstName"), rs3.getString("p.lastName"), rs3.getString("p.email"), rs3.getString("p.telephone")), rs3.getInt("p.idPersonnel"), rs3.getString("d.nomDepartement")));
