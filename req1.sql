@@ -277,3 +277,10 @@ SELECT f.* FROM fichecours f INNER JOIN cahierdetexte cdt ON f.`idCahierDeTexte`
 SELECT c.classeName FROM responsable r INNER JOIN classe c ON r.`idClasse` = c.idClasse ; 
 
 SELECT DISTINCT intitule FROM cours  ORDER BY idCours ASC;
+
+SELECT DISTINCT classeName FROM classe  ORDER BY idClasse ASC;
+
+SELECT DISTINCT * FROM personnel p INNER JOIN enseignant e ON p.idPersonnel = e.idPersonnel ORDER BY p.lastName ASC;
+
+
+

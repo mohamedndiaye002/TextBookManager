@@ -496,3 +496,6 @@ FROM
     INNER JOIN Personnel p ON f.idPersonnel = p.idPersonnel
     INNER JOIN Cours c ON f.idCours = c.idCours
 ORDER BY c.idCours ASC;
+
+
+

@@ -114,19 +114,19 @@ public class LoginScene {
                             ResponsableScene profileScene = new ResponsableScene(mainApp);
                             profileScene.getScene().getStylesheets().add(getClass().getResource("ressources/css/style.css").toExternalForm());
                             mainApp.changeScene(profileScene.getScene());
-                        // mainApp.getStage().setMaximized(true);
+
                         }
                     case 1 ->                         {
                             ChefDepartementScene profileScene = new ChefDepartementScene(mainApp);
                             profileScene.getScene().getStylesheets().add(getClass().getResource("ressources/css/style.css").toExternalForm());
                             mainApp.changeScene(profileScene.getScene());
-                        // mainApp.getStage().setMaximized(true);
+
                         }
                     case 2 ->                         {
                             EnseignantScene profileScene = new EnseignantScene(mainApp);
                             profileScene.getScene().getStylesheets().add(getClass().getResource("ressources/css/style.css").toExternalForm());
                             mainApp.changeScene(profileScene.getScene());
-                        // mainApp.getStage().setMaximized(true);
+
                 }
                 }
             } else {
