@@ -120,6 +120,28 @@ public class ChefDepartement extends Personne{
         }
     }
 
+    public void assignCourse(int idP, String intitule) {
+        // URL, user and the user password
+        String url = "jdbc:mysql://localhost:3306/cdt";
+        String user = "root";
+        String password = "";
+
+
+        String sql = "UPDATE cours SET idPersonnel = ? WHERE intitule = ?";
+        try {
+            Connection connection = DriverManager.getConnection(url, user, password);
+            PreparedStatement statement1 = connection.prepareStatement(sql);
+            statement1.setInt(1, idP);
+            statement1.setString(2, intitule);
+            statement1.executeUpdate();
+            System.out.println("Mis a jour reussie");
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Erreur de mis a jour    ");
+        }
+        // return null;
+    }
+
 
 
 }

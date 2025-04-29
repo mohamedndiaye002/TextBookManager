@@ -73,7 +73,7 @@ public class Enseignant extends Personne {
     }
 
     // Add course or course/info Method /////////////////////////////////////////////////////////////////////////////////////////////////////////
-    public Fiche addCoursDetails(String classeName, String intitule, String details) {
+    public void addCoursDetails(String classeName, String intitule, String details) {
         // URL, user and the user password
         String url = "jdbc:mysql://localhost:3306/cdt";
         String user = "root";
@@ -105,16 +105,16 @@ public class Enseignant extends Personne {
             int rowsInserted = statement1.executeUpdate();
             if (rowsInserted > 0) {
                 System.out.println("Insertion réussie !");
-                return new Fiche(1, false, details, result2.getInt("idCours"), result3.getInt("cdt.idCahierDeTexte"));
+                // return new Fiche(1, false, details, result2.getInt("idCours"), result3.getInt("cdt.idCahierDeTexte"));
             } else {
                 System.out.println("Échec de l'insertion.");
-                return null;
+                // return null;
             }
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("erreur");
         }
-        return null;
+        // return null;
     }
 
     public int getIdPersonnel() {

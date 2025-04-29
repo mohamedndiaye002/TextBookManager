@@ -140,6 +140,25 @@ public class recupData {
         return "null"; 
     }
 
+    public static String recupClasse(int id) {
+        String url = "jdbc:mysql://localhost:3306/cdt?useSSL=false";
+        String user = "root";
+        String password = "";
+
+        try (Connection conn = DriverManager.getConnection(url, user, password)) {
+            String query = "SELECT * FROM responsable r INNER JOIN classe c ON r.idClasse = c.idClasse WHERE r.idPersonnel = ?";
+            PreparedStatement stmt = conn.prepareStatement(query);
+            stmt.setInt(1, id);
+
+            ResultSet rs = stmt.executeQuery();
+            if(rs.next())
+            return rs.getString("c.classeName");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "null"; 
+    }
+
     public static int recupType(String email) {
         String url = "jdbc:mysql://localhost:3306/cdt?useSSL=false";
         String user = "root";
@@ -158,23 +177,5 @@ public class recupData {
         }
         return 0; 
     }
-    
-    public static String recupDepartment(int id) {
-        String url = "jdbc:mysql://localhost:3306/cdt?useSSL=false";
-        String user = "root";
-        String password = "";
-
-        try (Connection conn = DriverManager.getConnection(url, user, password)) {
-            String query = "SELECT * FROM chefdepartment c INNER JOIN departement d ON c.idDepartement = d.idDepartement WHERE c.idPersonnel = ?";
-            PreparedStatement stmt = conn.prepareStatement(query);
-            stmt.setInt(1, id);
-
-            ResultSet rs = stmt.executeQuery();
-            if(rs.next())
-            return rs.getString("d.nomDepartement");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return "null"; 
-    }
+ 
 }

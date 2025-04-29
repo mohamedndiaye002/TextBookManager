@@ -26,7 +26,7 @@ public class LoginScene {
 
     public LoginScene(MainApp mainApp) {
         // Charger l'image depuis le fichier
-        Image logoImage = new Image(getClass().getResource("ressources/images/uidt.jpeg").toExternalForm());
+        Image logoImage = new Image(getClass().getResource("ressources/images/logo.png").toExternalForm());
         // Créer un ImageView pour afficher l'image
         ImageView logoImageView = new ImageView(logoImage);
         // Ajuster la taille de l'image

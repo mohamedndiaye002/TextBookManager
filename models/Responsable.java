@@ -13,7 +13,7 @@ public class Responsable extends Personne {
     private String classe;
 
     // Construct Responsable Method 
-    public Responsable() {
+    public Responsable(Personne P, long NCE, int idPersonnel, String classe) {
         super(P.firstName, P.lastName, P.email, P.phoneNumber);
         this.NCE = NCE;
         this.classe = classe;

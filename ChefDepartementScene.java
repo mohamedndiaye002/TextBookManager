@@ -34,6 +34,7 @@ public class ChefDepartementScene {
         // Session session = Session.getInstance();
         // int id = session.getId();
         int id = 28;
+        // int id = session.getId();
         String firstName = recupNames(id);
         System.out.println("Session ID: " + id + ", First Name: " + firstName);
         // chargement des images
@@ -321,7 +322,7 @@ public class ChefDepartementScene {
         showPersonalBox.getChildren().addAll(showPersonalBoxHead, showPersonalContentScroll);
 
         // Asssign Course To a Teacher Box
-        VBox assignCourseBox = new VBox(60);
+        VBox assignCourseBox = new VBox(20);
         assignCourseBox.setAlignment(Pos.TOP_CENTER);
         // assignCourseBox.setStyle("-fx-border-color: blue; -fx-border-style: solid; -fx-border-width: 2px; -fx-border-radius: 10px");
 
@@ -334,45 +335,71 @@ public class ChefDepartementScene {
         assignCourseBoxTitle.setStyle("-fx-text-fill: white; -fx-font-size: 15px; -fx-font-weight: bold; -fx-font-family: poppins");
 
         assignCourseBoxHead.getChildren().add(assignCourseBoxTitle);
-        // assignCourseBox.getChildren().add(assignCourseBoxHead);
+        assignCourseBoxHead.setPrefHeight(50);
+        assignCourseBox.getChildren().add(assignCourseBoxHead);
 
+        
 
-        String allClasses = "SELECT DISTINCT cl.classeName, c.intitule FROM enseignant e INNER JOIN cours c ON e.idPersonnel = c.idPersonnel INNER JOIN fichecours f ON c.idCours = f.idCours INNER JOIN cahierdetexte cdt ON f.idCahierDeTexte = cdt.idCahierDeTexte INNER JOIN classe cl ON cdt.idClasse = cl.idClasse WHERE e.idPersonnel = 21 ORDER BY cl.classeName ASC;";
+        // String allClasses = "SELECT DISTINCT cl.classeName, c.intitule FROM enseignant e INNER JOIN cours c ON e.idPersonnel = c.idPersonnel INNER JOIN fichecours f ON c.idCours = f.idCours INNER JOIN cahierdetexte cdt ON f.idCahierDeTexte = cdt.idCahierDeTexte INNER JOIN classe cl ON cdt.idClasse = cl.idClasse WHERE e.idPersonnel = 21 ORDER BY cl.classeName ASC;";
+        String allCourses = "SELECT DISTINCT intitule FROM cours  ORDER BY idCours ASC";
+        String allClasses = "SELECT DISTINCT classeName FROM classe  ORDER BY idClasse ASC";
+        String allProf = "SELECT DISTINCT * FROM personnel p INNER JOIN enseignant e ON p.idPersonnel = e.idPersonnel ORDER BY p.lastName ASC";
 
         ChoiceBox<String> classeList = new ChoiceBox<>();
         ChoiceBox<String> courseList = new ChoiceBox<>();
-        TextArea detailsArea = new TextArea();
-        detailsArea.setPromptText("Ajouter les details du cours ici...");
-        detailsArea.setStyle("-fx-font-size: 14px; -fx-pref-width: 200px; -fx-padding: 0px; -fx-text-fill: black;");
+        ChoiceBox<String> profList = new ChoiceBox<>();
         Button addDetailsButton = new Button("Ajouter");
         addDetailsButton.setStyle("-fx-font-size: 14px; -fx-pref-width: 150px; -fx-text-fill: black;");
 
         try {
             Connection connection = DriverManager.getConnection(url, user, password);
-            PreparedStatement statement = connection.prepareStatement(allClasses);
-            // statement.setInt(1, id);
-            ResultSet result = statement.executeQuery();
+            PreparedStatement statementAllCourses = connection.prepareStatement(allCourses);
+            PreparedStatement statementAllClasses = connection.prepareStatement(allClasses);
+            PreparedStatement statementAllProf = connection.prepareStatement(allProf);
+            ResultSet resultAllCourses = statementAllCourses.executeQuery();
+            ResultSet resultAllClasses = statementAllClasses.executeQuery();
+            ResultSet resultAllProf = statementAllProf.executeQuery();
 
             // System.out.println("Le cahier de texte" + this.classe)
-            while (result.next()) {
-                classeList.getItems().add(result.getString("cl.classeName"));
-                courseList.getItems().add(result.getString("c.intitule"));
+            while (resultAllCourses.next()) {
+                courseList.getItems().add(resultAllCourses.getString("intitule"));
+            }
 
+            while (resultAllClasses.next()) {
+                classeList.getItems().add(resultAllClasses.getString("classeName"));
+            }
+
+            while (resultAllProf.next()) {
+                String completeName = resultAllProf.getString("p.email");
+                profList.getItems().add(completeName);
             }
             classeList.setStyle("-fx-font-size: 14px; -fx-pref-width: 200px; -fx-padding: 10px; -fx-background-color: #383A86; -fx-text-fill: white;");
             classeList.setValue("Sélectionnez une classe"); // Valeur par défaut
             courseList.setStyle("-fx-font-size: 14px; -fx-pref-width: 200px; -fx-padding: 10px; -fx-background-color: #383A86; -fx-text-fill: white;");
             courseList.setValue("Sélectionnez un cours"); // Valeur par défaut
+            profList.setStyle("-fx-font-size: 14px; -fx-pref-width: 200px; -fx-padding: 10px; -fx-background-color: #383A86; -fx-text-fill: white;");
+            profList.setValue("Sélectionnez un Professeur"); // Valeur par défaut
 
-            assignCourseBox.getChildren().addAll(assignCourseBoxHead, classeList, courseList, addDetailsButton);
+            assignCourseBox.getChildren().addAll(classeList, courseList, profList);
             classeList.setStyle("-fx-font-size: 14px; -fx-pref-width: 200px; -fx-padding: 10px; -fx-text-fill: black;");
             courseList.setStyle("-fx-font-size: 14px; -fx-pref-width: 200px; -fx-padding: 10px; -fx-text-fill: black;");
+            profList.setStyle("-fx-font-size: 14px; -fx-pref-width: 200px; -fx-padding: 10px; -fx-text-fill: black;");
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("erreur");
         }
 
-
+        assignCourseBox.getChildren().addAll(addDetailsButton);
+        addDetailsButton.setOnAction(event ->{
+            String profEm =profList.getValue();
+            int idProf = recupID(profEm);
+            String intituleCours = courseList.getValue();
+            ChefDepartement c =new ChefDepartement(new Personne(recupFirstName(id), recupLastName(id), recupEmail(id), recupPhoneNumber(id)), id, "Informatique");
+            c.assignCourse(idProf, intituleCours);
+            classeList.setValue("Sélectionnez une classe"); // Valeur par défaut
+            courseList.setValue("Sélectionnez un cours"); // Valeur par défaut
+            profList.setValue("Sélectionnez un Professeur"); // Valeur par défaut
+        });
         // assignCourseBox.prefHeightProperty().bind(assignCourseBoxHead.heightProperty().multiply(0.1));
         assignCourseBoxHead.setPrefHeight(50);
 
@@ -403,7 +430,8 @@ public class ChefDepartementScene {
         logOutIconView.setFitWidth(30);
         logOutIconView.setFitHeight(30);
 
-        Button addPersonneButton = new Button("Ajouter Personnel");
+
+        Button addPersonneButton = new Button("Ajouter un personnel");
         addPersonneButton.setGraphic(addPersonnelIconView);
         addPersonneButton.setStyle("-fx-content-display: top; -fx-pref-width: 200px; -fx-font-size: 14px;");
 
@@ -452,9 +480,8 @@ public class ChefDepartementScene {
         rightPanelBoxCenter.setAlignment(Pos.CENTER_LEFT);
         addProfBox.prefWidthProperty().bind(rightPanelBoxCenter.widthProperty().multiply(0.32));
         addStudentBox.prefWidthProperty().bind(rightPanelBoxCenter.widthProperty().multiply(0.32));
-        rightPanelBoxCenter.setMargin(addStudentBox, new Insets(0, 0, 0, 60));
-        showPersonalBox.prefWidthProperty().bind(rightPanelBoxCenter.widthProperty().multiply(0.75));
-        assignCourseBox.prefWidthProperty().bind(rightPanelBoxCenter.widthProperty().multiply(0.75));
+        showPersonalBox.prefWidthProperty().bind(rightPanelBoxCenter.widthProperty().multiply(0.7));
+        assignCourseBox.prefWidthProperty().bind(rightPanelBoxCenter.widthProperty().multiply(0.7));
         rightPanelBoxCenterRight.prefWidthProperty().bind(rightPanelBoxCenter.widthProperty().multiply(0.2));
 
         HBox rightPanelBoxBottom = new HBox();

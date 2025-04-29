@@ -122,14 +122,14 @@ public class EnseignantScene {
 
         // Titre en haut ---------------------------------------------------------------------
         Label titleLabel = new Label("Dashboard - Espace Enseignant");
-        titleLabel.setStyle("-fx-font-size: 30px;-fx-font-smoothing-type: lcd;-fx-text-fill: #383A86; -fx-font-weight: bold;-fx-font-family: 'Poppins';");
+        titleLabel.setStyle("-fx-font-size: 24px;-fx-font-smoothing-type: lcd;-fx-text-fill: #383A86; -fx-font-weight: bold;-fx-font-family: 'Poppins';");
         titleLabel.setFont(Font.loadFont("ressources/fonts/Poppins-Black.ttf", 30));
         titleLabel.getStyleClass().add("title-label");
 
         HBox accountBox = new HBox(20);
         accountBox.setPadding(new Insets(0, 20, 0, 20));
         Label accountLabel = new Label(firstName);
-        accountLabel.setStyle("-fx-font-size: 24px;-fx-font-smoothing-type: lcd;-fx-text-fill: white; -fx-font-weight: bold;-fx-font-family: 'Poppins';");
+        accountLabel.setStyle("-fx-font-size: 18px;-fx-font-smoothing-type: lcd;-fx-text-fill: white;");
         accountBox.getStyleClass().add("account-box");
         accountBox.setAlignment(Pos.CENTER_RIGHT);
         accountBox.getChildren().addAll(accountLabel, accountIconView);
@@ -145,7 +145,7 @@ public class EnseignantScene {
         // rightPanelBoxMiddle.setPrefHeight(100);
 
         Label classe = new Label("Specialite : "+ specialite);
-        classe.setStyle("-fx-font-size: 24px;-fx-font-smoothing-type: lcd;-fx-text-fill: #383A86; -fx-font-weight: bold;-fx-font-family: 'Poppins';");
+        classe.setStyle("-fx-font-size: 18px;-fx-font-smoothing-type: lcd;-fx-text-fill: #383A86; -fx-font-family: 'Poppins';");
 
         rightPanelBoxMiddle.getChildren().addAll(classe);
 
@@ -155,13 +155,30 @@ public class EnseignantScene {
         rightPanelBoxCenter.setAlignment(Pos.CENTER_LEFT);
         // rightPanelBoxCenter.setPrefHeight(400);
 
-        TitledPane titledPane = new TitledPane();
-        titledPane.setText("Activites Recentes");
-        VBox rightPanelBoxCenterLeft = new VBox(20);
-        rightPanelBoxCenterLeft.setPadding(new Insets(20));
-        rightPanelBoxCenterLeft.getStyleClass().add("right-panel-box-center-left");
-        rightPanelBoxCenterLeft.setAlignment(Pos.CENTER);
-        titledPane.setContent(rightPanelBoxCenterLeft);
+        VBox showCourseListBox = new VBox();
+
+
+        HBox showCourseListBoxHead = new HBox();
+        showCourseListBoxHead.setPrefHeight(50);
+        showCourseListBoxHead.setPadding(new Insets(20)); // Adds padding around the center section.
+        showCourseListBoxHead.setAlignment(Pos.CENTER_LEFT);
+        showCourseListBoxHead.setStyle("-fx-background-color: gray; -fx-background-radius: 10px 10px 0 0;");
+
+        Label courseHead =  new Label("Cours");
+        Label classeHead = new Label("Classe");
+        courseHead.setStyle("-fx-text-fill: white; -fx-font-size: 15px; -fx-font-weight: bold; -fx-font-family: poppins");
+        classeHead.setStyle("-fx-text-fill: white; -fx-font-size: 15px; -fx-font-weight: bold; -fx-font-family: poppins");
+
+        courseHead.prefWidthProperty().bind(showCourseListBoxHead.widthProperty().multiply(0.6));
+        classeHead.prefWidthProperty().bind(showCourseListBoxHead.widthProperty().multiply(0.3));
+        showCourseListBoxHead.getChildren().addAll (courseHead, classeHead);
+
+
+        VBox showCourseListBoxContent =  new VBox();
+        showCourseListBoxContent.setAlignment(Pos.CENTER_LEFT);
+
+            
+
 
         String url = "jdbc:mysql://localhost:3306/cdt";
         String user = "root";
@@ -178,25 +195,24 @@ public class EnseignantScene {
             // System.out.println("Le cahier de texte" + this.classe);
             int i = 0;
             while (result.next()) {
-                GridPane rightPanelBoxCenterLeftGrid = new GridPane();
-                rightPanelBoxCenterLeftGrid.setVgap(1);
-                rightPanelBoxCenterLeftGrid.setHgap(1);
-                rightPanelBoxCenterLeftGrid.getStyleClass().add("right-panel-box-center-left-grid");
-                rightPanelBoxCenterLeftGrid.setAlignment(Pos.CENTER_LEFT);
-                rightPanelBoxCenterLeftGrid.setPrefWidth(50);
+                HBox showCourseListBoxGrid = new HBox();
+                showCourseListBoxGrid.getStyleClass().add("right-panel-box-center-left-grid");
+                showCourseListBoxGrid.setAlignment(Pos.CENTER_LEFT);
+                showCourseListBoxGrid.setPrefHeight(30);
 
                 Label classeLabel = new Label(result.getString("cl.classeName"));
                 classeLabel.setStyle("-fx-font-size: 12px;-fx-font-smoothing-type: lcd;-fx-text-fill: black; -fx-font-weight: bold;-fx-font-family: 'Poppins';");
                 Label courseLabel = new Label(result.getString("c.intitule"));
-                courseLabel.setStyle("-fx-font-size: 16spx;-fx-font-smoothing-type: lcd;-fx-text-fill: #383A86; -fx-font-weight: bold;-fx-font-family: 'Poppins';");
+                courseLabel.setStyle("-fx-font-size: 14px;-fx-font-smoothing-type: lcd;-fx-text-fill: #383A86; -fx-font-weight: bold;-fx-font-family: 'Poppins';");
 
-                rightPanelBoxCenterLeftGrid.setConstraints(classeLabel, 0, 1, 3, 1);
-                rightPanelBoxCenterLeftGrid.getChildren().add(classeLabel);
-                rightPanelBoxCenterLeftGrid.setConstraints(courseLabel, 0, 0, 3, 1);
-                rightPanelBoxCenterLeftGrid.getChildren().add(courseLabel);
+                showCourseListBoxGrid.getChildren().addAll(courseLabel, classeLabel);
+                courseLabel.prefWidthProperty().bind(showCourseListBoxGrid.widthProperty().multiply(0.6));
+                classeLabel.prefWidthProperty().bind(showCourseListBoxGrid.widthProperty().multiply(0.3));
 
-                rightPanelBoxCenterLeft.getChildren().add(rightPanelBoxCenterLeftGrid);
-                rightPanelBoxCenterLeftGrid.setStyle(" -fx-padding: 20px; -fx-text-fill: black; -fx-font-size: 18px;");
+
+
+                showCourseListBoxContent.getChildren().add(showCourseListBoxGrid);
+                showCourseListBoxGrid.setStyle(" -fx-padding: 20px; -fx-text-fill: black; -fx-font-size: 18px;");
                 i++;
             }
 
@@ -206,10 +222,10 @@ public class EnseignantScene {
         }
 
 
-        VBox rightPanelBoxCenterCenter = new VBox(20);
-        rightPanelBoxCenterCenter.setPadding(new Insets(20));
-        rightPanelBoxCenterCenter.getStyleClass().add("right-panel-box-center-center");
-        rightPanelBoxCenterCenter.setAlignment(Pos.CENTER_LEFT);
+        VBox addCourseDetailsBox = new VBox(20);
+        addCourseDetailsBox.setPadding(new Insets(20));
+        addCourseDetailsBox.getStyleClass().add("right-panel-box-center-center");
+        addCourseDetailsBox.setAlignment(Pos.CENTER_LEFT);
 
         ChoiceBox<String> classeList = new ChoiceBox<>();
         ChoiceBox<String> courseList = new ChoiceBox<>();
@@ -226,8 +242,7 @@ public class EnseignantScene {
             // System.out.println(classeName + " " + intitule + " " + details);
             // Appel de la méthode pour ajouter le cours et les détails
             Enseignant e =new Enseignant(new Personne(recupFirstName(id), recupLastName(id), recupEmail(id), recupPhoneNumber(id)), id, recupSpecialite(id));
-            @SuppressWarnings("unused")
-            Fiche f = e.addCoursDetails(classeName, intitule, details);
+            e.addCoursDetails(classeName, intitule, details);
         });
 
 
@@ -248,7 +263,7 @@ public class EnseignantScene {
             courseList.setStyle("-fx-font-size: 14px; -fx-pref-width: 200px; -fx-padding: 10px; -fx-background-color: #383A86; -fx-text-fill: white;");
             courseList.setValue("Sélectionnez un cours"); // Valeur par défaut
 
-            rightPanelBoxCenterCenter.getChildren().addAll(classeList, courseList);
+            addCourseDetailsBox.getChildren().addAll(classeList, courseList);
             classeList.setStyle("-fx-font-size: 14px; -fx-pref-width: 200px; -fx-padding: 10px; -fx-text-fill: black;");
             courseList.setStyle("-fx-font-size: 14px; -fx-pref-width: 200px; -fx-padding: 10px; -fx-text-fill: black;");
         } catch (Exception e) {
@@ -256,10 +271,12 @@ public class EnseignantScene {
             System.out.println("erreur");
         }
 
-        rightPanelBoxCenterCenter.getChildren().addAll(detailsArea, addDetailsButton);
+        addCourseDetailsBox.getChildren().addAll(detailsArea, addDetailsButton);
         // Créer un ScrollPane et y placer le VBox
         ScrollPane scrollPane = new ScrollPane();
-        scrollPane.setContent(titledPane);
+        scrollPane.setContent(showCourseListBoxContent);
+
+        showCourseListBox.getChildren().addAll(showCourseListBoxHead, scrollPane);
 
         scrollPane.setFitToWidth(true);
         scrollPane.setPannable(true);
@@ -290,8 +307,8 @@ public class EnseignantScene {
         showCourses.setStyle("-fx-content-display: top; -fx-pref-width: 200px; -fx-font-size: 14px;");
 
         showCourses.setOnAction(event -> {
-            rightPanelBoxCenter.getChildren().add(scrollPane);
-            rightPanelBoxCenter.getChildren().remove(rightPanelBoxCenterCenter);
+            rightPanelBoxCenter.getChildren().add(showCourseListBox);
+            rightPanelBoxCenter.getChildren().remove(addCourseDetailsBox);
         });
 
 
@@ -314,16 +331,16 @@ public class EnseignantScene {
         addCourseContent.setStyle("-fx-content-display: top; -fx-pref-width: 200px; -fx-font-size: 14px;");
 
         addCourseContent.setOnAction(event -> {
-            rightPanelBoxCenter.getChildren().add(rightPanelBoxCenterCenter);
-            rightPanelBoxCenter.getChildren().remove(scrollPane);
+            rightPanelBoxCenter.getChildren().add(addCourseDetailsBox);
+            rightPanelBoxCenter.getChildren().remove(showCourseListBox);
         });
         rightPanelBoxCenterRight.getChildren().addAll(showCourses, addCourseContent, logOutButton);
 
 
 
         rightPanelBoxCenter.getChildren().add(rightPanelBoxCenterRight);
-        rightPanelBoxCenterLeft.prefWidthProperty().bind(rightPanelBoxCenter.widthProperty().multiply(0.6));
-        rightPanelBoxCenterCenter.prefWidthProperty().bind(rightPanelBoxCenter.widthProperty().multiply(0.6));
+        showCourseListBox.prefWidthProperty().bind(rightPanelBoxCenter.widthProperty().multiply(0.6));
+        addCourseDetailsBox.prefWidthProperty().bind(rightPanelBoxCenter.widthProperty().multiply(0.6));
         rightPanelBoxCenterRight.prefWidthProperty().bind(rightPanelBoxCenter.widthProperty().multiply(0.3));
 
         HBox rightPanelBoxBottom = new HBox();
